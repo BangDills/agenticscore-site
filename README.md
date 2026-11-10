@@ -13,6 +13,7 @@ assets/vendor/    GSAP 3.13.0 (gsap + ScrollTrigger), see its README for the lic
 assets/mark.png   logo mark, white on transparent, from the project's own artwork
 assets/favicon.png, assets/apple-touch-icon.png   the same mark on a navy plate
 assets/logos/     X, BscScan and Sourcify marks for the footer row
+skill.md          agent skill: lets an agent mint with no pasted prompt (served at /skill.md)
 SCORING.md        draft scoring spec for the backend (values not published on the page)
 ```
 
@@ -35,8 +36,14 @@ Google Fonts.
 
 The page is honest about its own state, and it should stay that way:
 
-- No contract is deployed, so there is no mint button. Minting happens through the agent
-  prompt, which tells the agent to stop unless a contract address is published on the site.
+- No contract is deployed, so there is no mint button. Minting happens through an agent, using
+  `skill.md` or the pasted prompt. Both tell the agent to stop unless minting is open.
+- Minting is shown as free, always with "gas only" next to it (about 0.00008 BNB). Gas varies a
+  little with the network. If a fixed fee is ever charged by the contract, it is no longer
+  "gas only" and every mention has to change.
+- `skill.md` has a Launch settings block (STATUS, CONTRACT_ADDRESS, VERIFY_ENDPOINT,
+  MINT_FUNCTION). It ships as NOT OPEN. At launch, fill those four values and set STATUS to OPEN.
+  The skill tells the agent to trust that block and nothing else.
 - The wallet check validates EVM address format in the browser. The allowlist
   lookup needs the verification backend; set `window.AGENTICSCORE_API` to the
   endpoint URL to turn that path on, and the loading, success, and error states

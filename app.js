@@ -226,29 +226,32 @@
     });
   }
 
-  /* ---------- Copy agent prompt ---------- */
+  /* ---------- Copy buttons (agent skill address and prompt) ---------- */
 
-  var copyButton = document.getElementById("copy-prompt");
-  var promptText = document.getElementById("agent-prompt");
+  var copyButtons = document.querySelectorAll("[data-copy]");
 
-  if (copyButton && promptText) {
-    copyButton.addEventListener("click", function () {
+  Array.prototype.forEach.call(copyButtons, function (button) {
+    var target = document.querySelector(button.getAttribute("data-copy"));
+    var label = button.textContent;
+    if (!target) return;
+
+    button.addEventListener("click", function () {
       function settle(ok) {
         if (!ok && window.getSelection) {
           var range = document.createRange();
-          range.selectNodeContents(promptText);
+          range.selectNodeContents(target);
           var selection = window.getSelection();
           selection.removeAllRanges();
           selection.addRange(range);
         }
-        copyButton.textContent = ok ? "Copied" : "Selected, press Ctrl or Cmd + C";
+        button.textContent = ok ? "Copied" : "Selected, press Ctrl or Cmd + C";
         window.setTimeout(function () {
-          copyButton.textContent = "Copy prompt";
+          button.textContent = label;
         }, 2600);
       }
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(promptText.textContent).then(
+        navigator.clipboard.writeText(target.textContent).then(
           function () { settle(true); },
           function () { settle(false); }
         );
@@ -256,7 +259,7 @@
       }
       settle(false);
     });
-  }
+  });
 
   /* ---------- Specification deck (phones only) ---------- */
 

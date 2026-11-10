@@ -603,6 +603,29 @@ button:disabled, input:disabled { cursor: not-allowed; }
   background: var(--bg-deep);
 }
 
+.agent-blocks {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+  align-content: start;
+}
+.skill-body {
+  padding: 18px 22px 20px;
+  background: var(--bg-deep);
+}
+.skill-url {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.skill-body p {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
 /* ---------- Data tables ---------- */
 
 .board-table {

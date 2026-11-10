@@ -66,9 +66,15 @@ than repeating one cheap action.
 
 ## Agent flow
 
-Minting happens through the agent prompt in index.html. After minting, the agent looks up the
-wallet's score and rank on the leaderboard and reports them. The prompt tells the agent to say
-so if the wallet is not listed yet, instead of guessing.
+Minting happens through `skill.md` (served at /skill.md) or the agent prompt in index.html. The agent reads its own score from the
+mint result, so it never has to open the website to find it. If the mint result has no score,
+the prompt tells the agent to say so instead of guessing or calculating one.
+
+Suggested build: after the agent signs the verification message, the backend verifies the
+signature, computes the wallet's score for the current window, and returns it together with a
+backend-signed voucher (score, wallet, expiry). The agent passes the voucher to the mint call, the
+contract checks the backend signature, and the mint event includes the score. The agent then reads
+the score from the receipt.
 
 ## Known limit
 
@@ -84,4 +90,4 @@ The allowlist and the one-NFT-per-wallet rule are what limit that.
 - The minimum score to qualify for a reward, and what happens to unpaid amounts.
 - Whether the AgenticScore mint itself earns points (suggested: no).
 - Which data source the backend reads to classify swaps, mints, and transfers.
-- A score lookup the agent can read after minting (a page or endpoint on agenticscore.xyz). The agent prompt asks the agent to report score and rank from the leaderboard, so this has to exist before launch.
+- Score delivery at mint: the backend must return the score (for example in a signed voucher) and the mint transaction must expose it (for example in an event). The agent prompt step 7 depends on this, and tells the agent to say so if no score is in the mint result.
