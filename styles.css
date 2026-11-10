@@ -727,13 +727,13 @@ button:disabled, input:disabled { cursor: not-allowed; }
 .footer-brandline {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 16px;
 }
-.footer-mark { display: block; width: 32px; height: 32px; flex: none; }
+.footer-mark { display: block; width: 24px; height: 24px; flex: none; }
 .footer-wordmark {
   margin: 0;
-  font-size: 1.35rem;
+  font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -760,7 +760,11 @@ button:disabled, input:disabled { cursor: not-allowed; }
   transition: box-shadow 0.12s ease-in-out;
 }
 .footer-logos a:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45); }
-.footer-logos img { display: block; width: 20px; height: 20px; opacity: 0.9; }
+/* Each mark is trimmed to its ink and padded to a square, so one box size covers all
+   three. The X cross is optically heavier than the two square marks, so it sits a
+   little smaller inside its tile. */
+.footer-logos img { display: block; width: 26px; height: 26px; opacity: 0.9; }
+.logo-x img { width: 22px; height: 22px; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 12px 22px; }
 .footer-links a {
   color: var(--muted);
