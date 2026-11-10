@@ -77,11 +77,11 @@ then rebuilt for this project, not copied wholesale:
   300, the answer in `#abb2ca` at weight 200, and the toggle is two 2px bars that overlap
   into a minus when the card is open. Native `details`/`summary` carries it, so it works
   without JavaScript and the card takes the focus ring.
-- The header menu on a phone is a drawer: a borderless three-line trigger opens a panel
-  that slides in from the right, the backdrop and Escape close it, Tab wraps inside it
-  while it is open, and focus returns to the trigger. Above 860px the same markup is the
-  plain inline row. The header's blur lives on a pseudo element, because backdrop-filter
-  on the header itself would make it the containing block for the fixed drawer.
+- The header menu on a phone is the panel that drops under the header, exactly as before;
+  the only change is the trigger, which is now three 2px lines in a 44px button with no
+  border or fill instead of the word "Menu". It rotates into an X while open, carries
+  `aria-expanded` and `aria-label`, and Escape returns focus to it. Above 860px the same
+  markup is the plain inline row.
 - Footer: the mark sits before the name, the name is set in caps, and X, BscScan and
   Sourcify are the reference's own footer buttons (36px square, 8px radius, `#10111a`
   fill, `#272c3a` border, 20px mark, shadow on hover). `-webkit-tap-highlight-color:

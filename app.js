@@ -9,16 +9,13 @@
 
   var EVM_ADDRESS = /^0x[0-9a-fA-F]{40}$/;
 
-  /* ---------- Header drawer (phones) ---------- */
+  /* ---------- Header menu (phones) ---------- */
 
-  /* The header menu on a phone is a drawer: the three-line button opens a panel that
-     slides in from the right, the backdrop or Escape closes it, Tab wraps inside it
-     while it is open, and focus goes back to the button when it closes. Above 860px the
-     same markup is the plain inline row, so none of this runs. */
+  /* The trigger is the only thing that changed here: three lines instead of the word
+     "Menu", with no border or fill. The panel still drops under the header, as before. */
 
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("site-nav");
-  var backdrop = document.querySelector(".nav-backdrop");
 
   function navOpen() {
     return nav && nav.getAttribute("data-open") === "true";
@@ -29,15 +26,7 @@
     nav.setAttribute("data-open", open ? "true" : "false");
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
     toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    if (backdrop) backdrop.setAttribute("data-open", open ? "true" : "false");
-    document.body.style.overflow = open ? "hidden" : "";
-    if (open) {
-      /* Focus the panel itself rather than the first link: the ring then never flashes
-         over a link for a touch user, and Tab still walks into the links. */
-      nav.focus();
-    } else if (returnFocus) {
-      toggle.focus();
-    }
+    if (!open && returnFocus) toggle.focus();
   }
 
   if (toggle && nav) {
@@ -49,30 +38,8 @@
       if (event.target.closest("a")) setNav(false);
     });
 
-    if (backdrop) {
-      backdrop.addEventListener("click", function () {
-        setNav(false, true);
-      });
-    }
-
     document.addEventListener("keydown", function (event) {
       if (event.key === "Escape" && navOpen()) setNav(false, true);
-    });
-
-    /* Keep Tab inside the drawer while it is open. */
-    nav.addEventListener("keydown", function (event) {
-      if (event.key !== "Tab" || !navOpen()) return;
-      var items = nav.querySelectorAll("a[href], button:not([disabled])");
-      if (!items.length) return;
-      var first = items[0];
-      var last = items[items.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
     });
 
     window.addEventListener("resize", function () {
