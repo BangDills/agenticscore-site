@@ -12,6 +12,7 @@ motion.js         GSAP reveal and counter layer
 assets/vendor/    GSAP 3.13.0 (gsap + ScrollTrigger), see its README for the licence
 assets/mark.png   logo mark, white on transparent, from the project's own artwork
 assets/favicon.png, assets/apple-touch-icon.png   the same mark on a navy plate
+assets/logos/     X, BscScan and Sourcify marks for the footer row
 SCORING.md        draft scoring spec for the backend (values not published on the page)
 ```
 
@@ -66,8 +67,10 @@ then rebuilt for this project, not copied wholesale:
 - The gauge is this project's own motif: the product is a score, so the score meter is the
   hero visual rather than a mock product screenshot.
 - On phones the specification rows become a stacked card deck: drag the top card sideways
-  to uncover the next one, or use Previous and Next. The deck is progressive enhancement
-  (a `.deck-ready` class added by `app.js`), so without JavaScript the rows stay the plain
+  to uncover the next one. The card that leaves goes to the bottom of the pile, so the
+  deck cycles and never runs out. The deck is a single tab stop and the arrow keys work on
+  it, since it has no visible controls. The deck is progressive enhancement (a
+  `.deck-ready` class added by `app.js`), so without JavaScript the rows stay the plain
   list they are on desktop.
 - The mark is the project's own artwork (wallet plus score gauge), converted to a white
   transparent PNG for the header and plated on navy for the favicon and touch icon. The

@@ -103,13 +103,6 @@
           <div><dt>Verification</dt><dd>Wallet address and a signature you approve</dd></div>
           <div><dt>Minting fee</dt><dd>None from the project. You pay your own gas.</dd></div>
         </dl>
-        <div class="deck-meta">
-          <span class="deck-count" aria-hidden="true">01 / 06</span>
-          <span class="deck-bar" aria-hidden="true"><span class="deck-bar-fill"></span></span>
-          <button class="btn btn-ghost btn-small deck-prev" type="button" aria-label="Previous card">Previous</button>
-          <button class="btn btn-ghost btn-small deck-next" type="button" aria-label="Next card">Next</button>
-        </div>
-        <p class="deck-hint">Drag the top card sideways, or use Previous and Next.</p>
       </div>
     </div>
   </section>
@@ -343,10 +336,16 @@ Rules:
 </main>
 
 <footer class="site-footer">
-  <div class="wrap footer-grid" data-reveal>
-    <div>
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
       <p class="wordmark footer-wordmark">AgenticScore</p>
-      <p class="footer-note">An independent project, not an official Binance product.</p>
+      <ul class="footer-logos">
+        <!-- TODO: these point at the platforms themselves. Swap in the project's own
+             profile, contract and verified-source pages once they exist. -->
+        <li><a href="https://x.com/"><img src="assets/logos/x.svg" alt="X" width="26" height="26"></a></li>
+        <li><a href="https://bscscan.com/"><img src="assets/logos/bscscan.png" alt="BscScan" width="26" height="26"></a></li>
+        <li><a href="https://sourcify.dev/"><img src="assets/logos/sourcify.png" alt="Sourcify" width="26" height="26"></a></li>
+      </ul>
     </div>
     <div class="footer-links">
       <a href="#scoring">Scoring</a>

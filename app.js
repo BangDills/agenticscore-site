@@ -256,10 +256,11 @@
   /* ---------- Specification deck (phones only) ---------- */
 
   /* Under 860px the specification rows are laid out as a deck: the first card on top,
-     the rest stacked behind it showing a 12px strip each. The top card can be dragged
-     sideways to uncover the next one; Previous and Next do the same thing without a
-     pointer, and the arrow keys work on the focused deck. Above that width none of this
-     runs and the rows stay the plain two-column table. */
+     the rest stacked behind it showing a 12px strip each. Dragging the top card away
+     sends it to the bottom of the pile, so the deck never runs out: the same six cards
+     keep coming round. The arrow keys do the same thing on the focused deck, which is
+     the keyboard path since the deck has no visible controls. Above that width none of
+     this runs and the rows stay the plain two-column table. */
 
   var deck = document.querySelector(".spec-deck");
   var deckQuery = window.matchMedia("(max-width: 860px)");
@@ -270,17 +271,9 @@
   if (deck && deckQuery) {
     var deckList = deck.querySelector(".spec-table");
     var deckCards = Array.prototype.slice.call(deckList.children);
-    var deckCount = deck.querySelector(".deck-count");
-    var deckFill = deck.querySelector(".deck-bar-fill");
-    var deckPrev = deck.querySelector(".deck-prev");
-    var deckNext = deck.querySelector(".deck-next");
     var order = deckCards.map(function (_, index) { return index; });
     var drag = null;
     var exitTimer = null;
-
-    function pad(value) {
-      return (value < 10 ? "0" : "") + value;
-    }
 
     function layout() {
       order.forEach(function (cardIndex, depth) {
@@ -294,9 +287,10 @@
         card.style.setProperty("--stack-x", depth * INSET + "px");
         card.style.zIndex = String(deckCards.length - depth);
         card.style.transform = "";
+        /* The card that just flew out was faded to 0 on its way; it is back in the pile
+           now, so the inline fade has to go with the transform. */
+        card.style.opacity = "";
       });
-      if (deckCount) deckCount.textContent = pad(order[0] + 1) + " / " + pad(deckCards.length);
-      if (deckFill) deckFill.style.transform = "scaleX(" + ((order[0] + 1) / deckCards.length).toFixed(4) + ")";
     }
 
     function measure() {
@@ -408,9 +402,6 @@
       card.addEventListener("pointerdown", onDown);
     });
 
-    if (deckNext) deckNext.addEventListener("click", next);
-    if (deckPrev) deckPrev.addEventListener("click", previous);
-
     deck.addEventListener("keydown", function (event) {
       if (event.key === "ArrowRight") { event.preventDefault(); next(); }
       else if (event.key === "ArrowLeft") { event.preventDefault(); previous(); }
@@ -423,7 +414,7 @@
         measure();
         layout();
         deck.setAttribute("tabindex", "0");
-        deck.setAttribute("aria-label", "Project specification, " + deckCards.length + " cards. Use the arrow keys, or the Previous and Next buttons.");
+        deck.setAttribute("aria-label", "Project specification, " + deckCards.length + " cards. Drag the top card, or use the left and right arrow keys.");
       } else {
         deck.classList.remove("deck-ready");
         deck.removeAttribute("tabindex");

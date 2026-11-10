@@ -348,10 +348,7 @@ button:disabled, input:disabled { cursor: not-allowed; }
 }
 .spec-table dd { margin: 0; font-size: 0.95rem; }
 
-/* Deck chrome for the phone layout. Hidden while the rows are a table. */
-
-.deck-meta,
-.deck-hint { display: none; }
+/* Deck chrome: the deck is gesture-only, so nothing but the focus ring is styled here. */
 
 /* Supply: the cap is the headline figure, so it takes the largest type on the page. */
 
@@ -663,7 +660,25 @@ button:disabled, input:disabled { cursor: not-allowed; }
   align-items: flex-start;
 }
 .footer-wordmark { margin: 0 0 12px; }
-.footer-note { margin: 0; max-width: 52ch; color: var(--muted-2); font-size: 0.86rem; }
+.footer-logos {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.footer-logos a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r);
+  transition: background-color 0.15s ease;
+}
+.footer-logos a:hover { background: rgba(235, 240, 246, 0.07); }
+.footer-logos img { display: block; width: 26px; height: 26px; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 12px 22px; }
 .footer-links a {
   color: var(--muted);
@@ -756,32 +771,6 @@ button:disabled, input:disabled { cursor: not-allowed; }
   .deck-ready .spec-table dd { font-size: 1rem; line-height: 1.45; }
   .spec-deck:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: 4px; border-radius: var(--r-lg); }
 
-  .deck-meta {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 16px 0 0;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--muted-2);
-  }
-  .deck-bar {
-    position: relative;
-    flex: 1;
-    height: 2px;
-    overflow: hidden;
-    background: var(--line-2);
-  }
-  .deck-bar-fill {
-    position: absolute;
-    inset: 0;
-    background: var(--blue-bright);
-    transform: scaleX(0.1667);
-    transform-origin: left center;
-    transition: transform 0.2s linear;
-  }
-  .deck-meta .btn { flex: none; min-height: 44px; padding: 12px 16px; }
-  .deck-hint { display: block; margin: 10px 0 0; }
   .checker, .honesty-block { padding: 20px 18px; }
   .mint-bar { flex-direction: column; align-items: stretch; }
   .mint-actions .btn { width: 100%; }
@@ -791,7 +780,6 @@ button:disabled, input:disabled { cursor: not-allowed; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .glint::after { display: none; }
-  .deck-bar-fill { transition: none; }
   .deck-ready .spec-table > div { transition: none; }
   .spinner { animation: none; border-top-color: var(--line-2); border-left-color: var(--blue-bright); }
   .btn, .skip-link { transition: none; }
