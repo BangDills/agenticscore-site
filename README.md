@@ -10,7 +10,8 @@ styles.css        design tokens, layout, states
 app.js            section nav and the wallet address check
 motion.js         GSAP reveal and counter layer
 assets/vendor/    GSAP 3.13.0 (gsap + ScrollTrigger), see its README for the licence
-assets/mark.svg   placeholder favicon mark
+assets/mark.png   logo mark, white on transparent, from the project's own artwork
+assets/favicon.png, assets/apple-touch-icon.png   the same mark on a navy plate
 SCORING.md        draft scoring spec for the backend (values not published on the page)
 ```
 
@@ -64,7 +65,14 @@ then rebuilt for this project, not copied wholesale:
   a light-sweep "glint" on hover, the reference's `--glint-period` device.
 - The gauge is this project's own motif: the product is a score, so the score meter is the
   hero visual rather than a mock product screenshot.
-- `assets/mark.svg` is a placeholder mark, not a designed logo. Replace it.
+- On phones the specification rows become a stacked card deck: drag the top card sideways
+  to uncover the next one, or use Previous and Next. The deck is progressive enhancement
+  (a `.deck-ready` class added by `app.js`), so without JavaScript the rows stay the plain
+  list they are on desktop.
+- The mark is the project's own artwork (wallet plus score gauge), converted to a white
+  transparent PNG for the header and plated on navy for the favicon and touch icon. The
+  source file was a 2048px JPEG; if an SVG original exists, drop it in and it will be
+  sharper at large sizes.
 
 ## Motion
 

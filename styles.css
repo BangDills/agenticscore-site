@@ -348,9 +348,10 @@ button:disabled, input:disabled { cursor: not-allowed; }
 }
 .spec-table dd { margin: 0; font-size: 0.95rem; }
 
-/* Rail readout for the mobile card rail. Hidden while the rows are a table. */
+/* Deck chrome for the phone layout. Hidden while the rows are a table. */
 
-.rail-meta { display: none; }
+.deck-meta,
+.deck-hint { display: none; }
 
 /* Supply: the cap is the headline figure, so it takes the largest type on the page. */
 
@@ -708,57 +709,79 @@ button:disabled, input:disabled { cursor: not-allowed; }
   .hero { padding: 56px 0 48px; }
   .result-grid > div { grid-template-columns: 1fr; gap: 4px; }
 
-  /* On a phone the specification rows stop being a table and become a card rail:
-     one card per row, swiped horizontally, snapped, with a position readout. */
-  .spec-table {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 4px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-  .spec-table::-webkit-scrollbar { display: none; }
+  /* On a phone the specification rows become a deck: one card on top, the rest stacked
+     behind it, each showing a 12px strip. Drag the top card sideways to uncover the next
+     one. The whole thing is progressive enhancement: without this class the rows are the
+     plain stacked list below, so no JavaScript still reads correctly.
+
+     The stacked label-over-value layout is set here, not inside .deck-ready, so the
+     height measured before the deck is built matches the height the cards get. */
   .spec-table > div {
     display: block;
-    flex: 0 0 76%;
-    scroll-snap-align: start;
+    padding: 16px 0;
+  }
+  .spec-table dt { margin-bottom: 8px; }
+
+  .spec-deck { position: relative; }
+  .deck-ready .spec-table {
+    position: relative;
+    display: block;
+    height: var(--deck-height);
+    margin: 0;
+    touch-action: pan-y;
+  }
+  .deck-ready .spec-table > div {
+    position: absolute;
+    top: 0;
+    left: var(--stack-x, 0px);
+    right: var(--stack-x, 0px);
+    display: block;
+    height: var(--card-height);
+    overflow: hidden;
     padding: 18px;
     background: var(--panel);
     border: 1px solid var(--line-2);
     border-radius: var(--r-lg);
+    transform: translate3d(0, var(--stack-y, 0px), 0);
+    transition: transform 0.32s cubic-bezier(0.2, 0.7, 0.2, 1), opacity 0.32s ease, left 0.32s cubic-bezier(0.2, 0.7, 0.2, 1), right 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+    will-change: transform;
   }
-  .spec-table dt { padding-top: 0; margin-bottom: 10px; }
-  .spec-table dd { font-size: 1rem; line-height: 1.45; }
-  /* The rail itself takes the tab stop, so the ring goes on the rail. */
-  .spec-table:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: 3px; }
+  .deck-ready .spec-table > div[data-depth="0"] { cursor: grab; }
+  .deck-ready .spec-table > div.is-dragging {
+    transition: none;
+    cursor: grabbing;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  }
+  .deck-ready .spec-table dt { padding-top: 0; margin-bottom: 10px; }
+  .deck-ready .spec-table dd { font-size: 1rem; line-height: 1.45; }
+  .spec-deck:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: 4px; border-radius: var(--r-lg); }
 
-  .rail-meta {
+  .deck-meta {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     margin: 16px 0 0;
     font-family: var(--font-mono);
     font-size: 0.72rem;
     color: var(--muted-2);
   }
-  .rail-bar {
+  .deck-bar {
     position: relative;
     flex: 1;
     height: 2px;
     overflow: hidden;
     background: var(--line-2);
   }
-  .rail-bar-fill {
+  .deck-bar-fill {
     position: absolute;
     inset: 0;
     background: var(--blue-bright);
-    transform: scaleX(0.1429);
+    transform: scaleX(0.1667);
     transform-origin: left center;
-    transition: transform 0.15s linear;
+    transition: transform 0.2s linear;
   }
-  .rail-hint { flex: none; }
+  .deck-meta .btn { flex: none; min-height: 44px; padding: 12px 16px; }
+  .deck-hint { display: block; margin: 10px 0 0; }
   .checker, .honesty-block { padding: 20px 18px; }
   .mint-bar { flex-direction: column; align-items: stretch; }
   .mint-actions .btn { width: 100%; }
@@ -768,7 +791,8 @@ button:disabled, input:disabled { cursor: not-allowed; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .glint::after { display: none; }
-  .rail-bar-fill { transition: none; }
+  .deck-bar-fill { transition: none; }
+  .deck-ready .spec-table > div { transition: none; }
   .spinner { animation: none; border-top-color: var(--line-2); border-left-color: var(--blue-bright); }
   .btn, .skip-link { transition: none; }
 }

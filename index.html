@@ -9,7 +9,8 @@
 <meta property="og:description" content="Rank by wallet activity. The top 100 share a 1,000 USDT reward pool every week.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#0a0d16">
-<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -21,12 +22,7 @@
 <header class="site-header">
   <div class="wrap nav-row">
     <a class="wordmark" href="#top">
-      <!-- TODO: placeholder mark. Replace with the project's real logo when one exists. -->
-      <svg class="mark" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-        <path d="M3.5 17.5A10 10 0 0 1 20.5 17.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
-        <path d="M12 17.5 17 9.5" fill="none" stroke="#6da3ff" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="12" cy="17.5" r="1.8" fill="currentColor"/>
-      </svg>
+      <img class="mark" src="assets/mark.png" alt="" width="24" height="24">
       <span>AgenticScore</span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
@@ -98,20 +94,23 @@
         <h2>What AgenticScore is</h2>
         <p>A reputation layer for Binance Agentic Wallets. Wallet activity is measured and turned into a score that ranks you on the leaderboard. Joining takes one non-transferable NFT, identical for every wallet. During the MVP, only wallets on the project allowlist can take part.</p>
       </div>
-      <dl class="spec-table" data-reveal data-stagger>
-        <div><dt>Collection</dt><dd>AgenticScore NFT</dd></div>
-        <div><dt>Eligibility</dt><dd>Verified Binance Agentic Wallet holders</dd></div>
-        <div><dt>Score</dt><dd>Open-ended, with no maximum</dd></div>
-        <div><dt>Reward pool</dt><dd>1,000 USDT every week, shared by the top 100 wallets</dd></div>
-        <div><dt>Verification</dt><dd>Wallet address and a signature you approve</dd></div>
-        <div><dt>Minting fee</dt><dd>None from the project. You pay your own gas.</dd></div>
-        <div><dt>Website</dt><dd>agenticscore.xyz</dd></div>
-      </dl>
-      <p class="rail-meta" aria-hidden="true">
-        <span class="rail-count">01 / 07</span>
-        <span class="rail-bar"><span class="rail-bar-fill"></span></span>
-        <span class="rail-hint">Swipe</span>
-      </p>
+      <div class="spec-deck" data-reveal>
+        <dl class="spec-table">
+          <div><dt>Collection</dt><dd>AgenticScore NFT</dd></div>
+          <div><dt>Eligibility</dt><dd>Verified Binance Agentic Wallet holders</dd></div>
+          <div><dt>Score</dt><dd>Open-ended, with no maximum</dd></div>
+          <div><dt>Reward pool</dt><dd>1,000 USDT every week, shared by the top 100 wallets</dd></div>
+          <div><dt>Verification</dt><dd>Wallet address and a signature you approve</dd></div>
+          <div><dt>Minting fee</dt><dd>None from the project. You pay your own gas.</dd></div>
+        </dl>
+        <div class="deck-meta">
+          <span class="deck-count" aria-hidden="true">01 / 06</span>
+          <span class="deck-bar" aria-hidden="true"><span class="deck-bar-fill"></span></span>
+          <button class="btn btn-ghost btn-small deck-prev" type="button" aria-label="Previous card">Previous</button>
+          <button class="btn btn-ghost btn-small deck-next" type="button" aria-label="Next card">Next</button>
+        </div>
+        <p class="deck-hint">Drag the top card sideways, or use Previous and Next.</p>
+      </div>
     </div>
   </section>
 

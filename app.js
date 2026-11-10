@@ -253,59 +253,201 @@
     });
   }
 
-  /* ---------- Specification rail (phones only) ---------- */
+  /* ---------- Specification deck (phones only) ---------- */
 
-  /* Under 860px the spec rows are laid out as a horizontal card rail, so the container
-     needs a tab stop to be scrollable by keyboard, and the readout under it needs to
-     follow the real scroll position. Above that width the rows are a plain table and
-     none of this applies, including the extra tab stop. */
+  /* Under 860px the specification rows are laid out as a deck: the first card on top,
+     the rest stacked behind it showing a 12px strip each. The top card can be dragged
+     sideways to uncover the next one; Previous and Next do the same thing without a
+     pointer, and the arrow keys work on the focused deck. Above that width none of this
+     runs and the rows stay the plain two-column table. */
 
-  var spec = document.querySelector(".spec-table");
-  var railQuery = window.matchMedia("(max-width: 860px)");
+  var deck = document.querySelector(".spec-deck");
+  var deckQuery = window.matchMedia("(max-width: 860px)");
+  var STRIP = 12;
+  var INSET = 7;
+  var EXIT_MS = 320;
 
-  if (spec && railQuery) {
-    var cards = Array.prototype.slice.call(spec.children);
-    var railCount = document.querySelector(".rail-count");
-    var railFill = document.querySelector(".rail-bar-fill");
+  if (deck && deckQuery) {
+    var deckList = deck.querySelector(".spec-table");
+    var deckCards = Array.prototype.slice.call(deckList.children);
+    var deckCount = deck.querySelector(".deck-count");
+    var deckFill = deck.querySelector(".deck-bar-fill");
+    var deckPrev = deck.querySelector(".deck-prev");
+    var deckNext = deck.querySelector(".deck-next");
+    var order = deckCards.map(function (_, index) { return index; });
+    var drag = null;
+    var exitTimer = null;
 
     function pad(value) {
       return (value < 10 ? "0" : "") + value;
     }
 
-    function nearestCard() {
-      var best = 0;
-      var bestDistance = Infinity;
-      cards.forEach(function (card, index) {
-        var distance = Math.abs(card.offsetLeft - spec.scrollLeft);
-        if (distance < bestDistance) {
-          bestDistance = distance;
-          best = index;
-        }
+    function layout() {
+      order.forEach(function (cardIndex, depth) {
+        var card = deckCards[cardIndex];
+        card.setAttribute("data-depth", String(depth));
+        card.style.setProperty("--stack-y", depth * STRIP + "px");
+        /* Each card behind is inset rather than scaled: a scale would shrink the card
+           around its centre and let its text show through the strip the card above
+           leaves open. An inset keeps the bottom edge in place, so the strip is a clean
+           edge of panel, not a slice of the text. */
+        card.style.setProperty("--stack-x", depth * INSET + "px");
+        card.style.zIndex = String(deckCards.length - depth);
+        card.style.transform = "";
       });
-      return best;
+      if (deckCount) deckCount.textContent = pad(order[0] + 1) + " / " + pad(deckCards.length);
+      if (deckFill) deckFill.style.transform = "scaleX(" + ((order[0] + 1) / deckCards.length).toFixed(4) + ")";
     }
 
-    function syncRail() {
-      var scrollable = spec.scrollWidth - spec.clientWidth;
-      var progress = scrollable > 0 ? spec.scrollLeft / scrollable : 0;
-      if (railCount) railCount.textContent = pad(nearestCard() + 1) + " / " + pad(cards.length);
-      if (railFill) railFill.style.transform = "scaleX(" + Math.max(progress, 1 / cards.length).toFixed(4) + ")";
+    function measure() {
+      deck.classList.remove("deck-ready");
+      var tallest = 0;
+      deckCards.forEach(function (card) {
+        tallest = Math.max(tallest, card.offsetHeight, card.scrollHeight);
+      });
+      /* Every card gets the tallest card's height, so the card on top always covers the
+       ones behind it and each strip below is empty panel, not a slice of text. The cards
+       stay fully opaque: a fade would let the card behind show through the strip. */
+      deck.style.setProperty("--card-height", tallest + "px");
+      deck.style.setProperty("--deck-height", tallest + (deckCards.length - 1) * STRIP + "px");
+      deck.classList.add("deck-ready");
     }
 
-    function applyRailMode() {
-      if (railQuery.matches) {
-        spec.setAttribute("tabindex", "0");
-        spec.setAttribute("aria-label", "Project specification. Swipe, or use the arrow keys.");
-      } else {
-        spec.removeAttribute("tabindex");
-        spec.removeAttribute("aria-label");
+    function next() {
+      if (exitTimer) return;
+      var card = deckCards[order[0]];
+      var distance = deckList.clientWidth * 1.2;
+      card.style.transform = "translate3d(" + distance + "px, 8px, 0) rotate(14deg)";
+      card.style.opacity = "0";
+      exitTimer = window.setTimeout(function () {
+        exitTimer = null;
+        card.style.transition = "none";
+        order.push(order.shift());
+        layout();
+        void card.offsetWidth;
+        card.style.transition = "";
+      }, EXIT_MS);
+    }
+
+    /* Previous reorders and lets the card transition up out of the pile, so the same
+       gesture reads in reverse without a second animation path. */
+    function previous() {
+      if (exitTimer) return;
+      order.unshift(order.pop());
+      layout();
+    }
+
+    function endDrag(pointerId) {
+      if (!drag || drag.pointerId !== pointerId) return;
+      var card = drag.card;
+      var dx = drag.dx;
+      window.clearTimeout(drag.holdTimer);
+      card.removeEventListener("pointermove", onMove);
+      card.removeEventListener("pointerup", onUp);
+      card.removeEventListener("pointercancel", onUp);
+      if (card.releasePointerCapture) {
+        try { card.releasePointerCapture(pointerId); } catch (error) { /* already released */ }
       }
-      syncRail();
+      drag = null;
+      card.classList.remove("is-dragging");
+      if (Math.abs(dx) > deckList.clientWidth * 0.28) {
+        var distance = dx < 0 ? -deckList.clientWidth * 1.2 : deckList.clientWidth * 1.2;
+        var tilt = dx < 0 ? -14 : 14;
+        card.style.transform = "translate3d(" + distance + "px, 8px, 0) rotate(" + tilt + "deg)";
+        card.style.opacity = "0";
+        exitTimer = window.setTimeout(function () {
+          exitTimer = null;
+          card.style.transition = "none";
+          order.push(order.shift());
+          layout();
+          void card.offsetWidth;
+          card.style.transition = "";
+        }, EXIT_MS);
+        return;
+      }
+      layout();
     }
 
-    spec.addEventListener("scroll", syncRail, { passive: true });
-    window.addEventListener("resize", syncRail);
-    if (railQuery.addEventListener) railQuery.addEventListener("change", applyRailMode);
-    applyRailMode();
+    function onMove(event) {
+      if (!drag || event.pointerId !== drag.pointerId) return;
+      drag.dx = event.clientX - drag.startX;
+      if (!drag.lifted) {
+        /* A quick sideways flick grabs the card. A gesture that stays vertical is left to
+           the browser, so the page still scrolls when the visitor drags up or down here. */
+        if (Math.abs(drag.dx) < 12) return;
+        drag.lifted = true;
+        window.clearTimeout(drag.holdTimer);
+        drag.card.classList.add("is-dragging");
+      }
+      drag.card.style.transform =
+        "translate3d(" + drag.dx + "px, 0, 0) rotate(" + (drag.dx / 26).toFixed(2) + "deg)";
+    }
+
+    function onUp(event) {
+      endDrag(event.pointerId);
+    }
+
+    function onDown(event) {
+      var card = event.currentTarget;
+      if (card.getAttribute("data-depth") !== "0") return;
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      drag = { card: card, pointerId: event.pointerId, startX: event.clientX, dx: 0, lifted: false, holdTimer: null };
+      card.setPointerCapture(event.pointerId);
+      /* Hold to lift the card, the gesture the deck is built around. */
+      drag.holdTimer = window.setTimeout(function () {
+        if (!drag) return;
+        drag.lifted = true;
+        drag.card.classList.add("is-dragging");
+      }, 160);
+      card.addEventListener("pointermove", onMove);
+      card.addEventListener("pointerup", onUp);
+      card.addEventListener("pointercancel", onUp);
+    }
+
+    deckCards.forEach(function (card) {
+      card.addEventListener("pointerdown", onDown);
+    });
+
+    if (deckNext) deckNext.addEventListener("click", next);
+    if (deckPrev) deckPrev.addEventListener("click", previous);
+
+    deck.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowRight") { event.preventDefault(); next(); }
+      else if (event.key === "ArrowLeft") { event.preventDefault(); previous(); }
+      else if (event.key === "Home") { event.preventDefault(); while (order[0] !== 0) previous(); }
+      else if (event.key === "End") { event.preventDefault(); while (order[0] !== deckCards.length - 1) next(); }
+    });
+
+    function applyDeckMode() {
+      if (deckQuery.matches) {
+        measure();
+        layout();
+        deck.setAttribute("tabindex", "0");
+        deck.setAttribute("aria-label", "Project specification, " + deckCards.length + " cards. Use the arrow keys, or the Previous and Next buttons.");
+      } else {
+        deck.classList.remove("deck-ready");
+        deck.removeAttribute("tabindex");
+        deck.removeAttribute("aria-label");
+        deck.removeAttribute("style");
+        deckCards.forEach(function (card) {
+          card.removeAttribute("data-depth");
+          card.removeAttribute("style");
+        });
+      }
+    }
+
+    if (deckQuery.addEventListener) deckQuery.addEventListener("change", applyDeckMode);
+    window.addEventListener("resize", function () {
+      if (deckQuery.matches) { measure(); layout(); }
+    });
+    window.addEventListener("load", function () {
+      if (deckQuery.matches) { measure(); layout(); }
+    });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        if (deckQuery.matches) { measure(); layout(); }
+      });
+    }
+    applyDeckMode();
   }
 })();
