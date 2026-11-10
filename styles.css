@@ -204,20 +204,6 @@ button:disabled, input:disabled { cursor: not-allowed; }
   align-items: center;
 }
 
-.status-line {
-  display: inline-block;
-  margin: 0 0 22px;
-  padding: 7px 12px;
-  font-family: var(--font-mono);
-  font-size: 0.74rem;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
-  color: var(--muted);
-  border: 1px solid var(--line);
-  border-radius: var(--r-input);
-  background: var(--panel);
-}
-
 .lede {
   max-width: 58ch;
   margin-top: 20px;
@@ -397,33 +383,14 @@ button:disabled, input:disabled { cursor: not-allowed; }
 
 .eligibility-grid {
   display: grid;
-  grid-template-columns: 1.4fr 0.8fr;
-  gap: 24px;
-  align-items: stretch;
+  grid-template-columns: 1fr;
 }
-.eligibility-grid + .caption { margin-top: 22px; }
 
 .mint-steps {
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.security-note {
-  padding: 24px 26px;
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: var(--r-panel);
-}
-.security-note h3 { margin-bottom: 14px; }
-.security-note ul {
-  margin: 0 0 16px;
-  padding: 0;
-  list-style: none;
-  font-family: var(--font-mono);
-  font-size: 0.86rem;
-}
-.security-note li { padding: 7px 0; border-bottom: 1px solid var(--line-soft); }
-.security-note p { color: var(--muted); font-size: 0.92rem; }
 
 /* Wallet check: the only live control on the page. */
 
@@ -701,7 +668,7 @@ button:disabled, input:disabled { cursor: not-allowed; }
   .hero { padding: 56px 0 48px; }
   .spec-table > div,
   .result-grid > div { grid-template-columns: 1fr; gap: 4px; }
-  .checker, .honesty-block, .security-note { padding: 22px 20px; }
+  .checker, .honesty-block { padding: 22px 20px; }
   .mint-bar { flex-direction: column; align-items: stretch; }
   .mint-actions .btn { width: 100%; }
 }
