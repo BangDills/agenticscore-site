@@ -72,6 +72,11 @@ then rebuilt for this project, not copied wholesale:
   it, since it has no visible controls. The deck is progressive enhancement (a
   `.deck-ready` class added by `app.js`), so without JavaScript the rows stay the plain
   list they are on desktop.
+- The FAQ is the reference's own block pattern, measured from its markup: each question is
+  a rounded card (`#151620`, 16px radius, 8px apart), the question sits in white at weight
+  300, the answer in `#abb2ca` at weight 200, and the toggle is two 2px bars that overlap
+  into a minus when the card is open. Native `details`/`summary` carries it, so it works
+  without JavaScript and the card takes the focus ring.
 - The mark is the project's own artwork (wallet plus score gauge), converted to a white
   transparent PNG for the header and plated on navy for the favicon and touch icon. The
   source file was a 2048px JPEG; if an SVG original exists, drop it in and it will be

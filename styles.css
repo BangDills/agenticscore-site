@@ -628,21 +628,78 @@ button:disabled, input:disabled { cursor: not-allowed; }
 
 /* ---------- FAQ ---------- */
 
-.qa-list { max-width: 800px; }
-.qa-list details { border-bottom: 1px solid var(--line); }
-.qa-list details:first-child { border-top: 1px solid var(--line); }
-.qa-list summary {
-  padding: 17px 0;
-  font-size: 1rem;
-  font-weight: 500;
+/* Measured from arkm.com's own FAQ: each question is a rounded card (#151620, 16px
+   radius, 8px apart), the question sits in white at 18px weight 300, and the toggle is
+   two 2px bars that overlap into a minus when the card is open. Native details/summary
+   keeps it keyboard operable and readable without JavaScript. */
+
+.qa-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 960px;
 }
-.qa-list summary::marker { color: var(--blue-bright); }
+.qa-list details {
+  background: #151620;
+  border-radius: 16px;
+}
+@supports selector(:has(*)) {
+  .qa-list summary:focus-visible { outline: none; }
+  .qa-list details:has(summary:focus-visible) {
+    outline: 2px solid var(--blue-bright);
+    outline-offset: 3px;
+  }
+}
+.qa-list summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 24px;
+  font-size: 1.125rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  color: #ffffff;
+  list-style: none;
+  transition: padding-bottom 0.3s ease-out;
+}
+.qa-list summary::-webkit-details-marker { display: none; }
+.qa-list summary::marker { content: ""; }
+.qa-list details[open] summary { padding-bottom: 10px; }
+.qa-q { flex: 1; min-width: 0; }
+
+.qa-mark {
+  position: relative;
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin-top: 2px;
+  color: #ffffff;
+}
+.qa-mark span { position: absolute; background: currentColor; border-radius: 999px; }
+.qa-mark span:first-child { left: 5px; right: 5px; top: 11px; height: 2px; }
+.qa-mark span:last-child {
+  top: 5px;
+  bottom: 5px;
+  left: 11px;
+  width: 2px;
+  transition: transform 0.3s ease-out;
+}
+.qa-list details[open] .qa-mark span:last-child { transform: rotate(90deg); }
+
 .qa-list p {
-  padding-bottom: 20px;
   margin: 0;
-  color: var(--muted);
-  font-size: 0.94rem;
-  max-width: 70ch;
+  padding: 0 58px 24px 24px;
+  font-size: 0.875rem;
+  font-weight: 200;
+  letter-spacing: 0.01em;
+  line-height: 1.7;
+  color: #abb2ca;
+}
+.qa-list details[open] p { animation: qa-open 0.3s ease-out; }
+@keyframes qa-open {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
 }
 
 /* ---------- Footer ---------- */
@@ -772,6 +829,9 @@ button:disabled, input:disabled { cursor: not-allowed; }
   .spec-deck:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: 4px; border-radius: var(--r-lg); }
 
   .checker, .honesty-block { padding: 20px 18px; }
+  .qa-list summary { padding: 20px; font-size: 1.05rem; }
+  .qa-list details[open] summary { padding-bottom: 8px; }
+  .qa-list p { padding: 0 32px 20px 20px; }
   .mint-bar { flex-direction: column; align-items: stretch; }
   .mint-actions .btn { width: 100%; }
   .board-table th, .board-table td { padding: 11px 12px; }
@@ -781,6 +841,9 @@ button:disabled, input:disabled { cursor: not-allowed; }
   html { scroll-behavior: auto; }
   .glint::after { display: none; }
   .deck-ready .spec-table > div { transition: none; }
+  .qa-list summary { transition: none; }
+  .qa-mark span:last-child { transition: none; }
+  .qa-list details[open] p { animation: none; }
   .spinner { animation: none; border-top-color: var(--line-2); border-left-color: var(--blue-bright); }
   .btn, .skip-link { transition: none; }
 }
