@@ -32,8 +32,9 @@
     if (backdrop) backdrop.setAttribute("data-open", open ? "true" : "false");
     document.body.style.overflow = open ? "hidden" : "";
     if (open) {
-      var first = nav.querySelector("a[href]");
-      if (first) first.focus();
+      /* Focus the panel itself rather than the first link: the ring then never flashes
+         over a link for a touch user, and Tab still walks into the links. */
+      nav.focus();
     } else if (returnFocus) {
       toggle.focus();
     }

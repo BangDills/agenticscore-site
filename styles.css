@@ -227,6 +227,9 @@ button:disabled, input:disabled { cursor: not-allowed; }
   transition: opacity 0.28s ease;
 }
 .nav-backdrop[data-open="true"] { opacity: 1; pointer-events: auto; }
+/* The drawer panel takes focus when it opens so that Tab walks into its links, but it is
+   not an interactive control, so it draws no ring of its own. */
+.site-nav:focus { outline: none; }
 
 /* ---------- Buttons ---------- */
 
