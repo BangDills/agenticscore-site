@@ -609,6 +609,38 @@ button:disabled, input:disabled { cursor: not-allowed; }
   min-width: 0;
   align-content: start;
 }
+/* The prompt panel is held to the height of the skill panel above it (measured in
+   app.js) and scrolls inside, so two thousand characters of prompt do not stretch the
+   page. The scrollbar is hidden on purpose; the panel still scrolls by wheel, touch, or
+   keyboard, and the pre keeps its tabindex so it can be reached with Tab. */
+.prompt-script {
+  display: flex;
+  flex-direction: column;
+  max-height: min(70vh, 420px);
+}
+.prompt-script .prompt-text {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.prompt-script .prompt-text::-webkit-scrollbar { width: 0; height: 0; display: none; }
+/* No scrollbar means no cue that there is more text, so the last few pixels fade out
+   instead of cutting a line in half. It goes on ::before because ::after on this panel
+   is the glint sweep. */
+.prompt-script::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  z-index: 1;
+  height: 28px;
+  border-radius: 0 0 9px 9px;
+  background: linear-gradient(to bottom, rgba(7, 10, 17, 0), var(--bg-deep));
+  pointer-events: none;
+}
 .skill-body {
   padding: 18px 22px 20px;
   background: var(--bg-deep);
@@ -620,6 +652,8 @@ button:disabled, input:disabled { cursor: not-allowed; }
   color: var(--text);
   overflow-wrap: anywhere;
 }
+a.skill-url { color: var(--blue-bright); text-decoration: none; }
+a.skill-url:hover { text-decoration: underline; text-underline-offset: 3px; }
 .skill-body p {
   margin: 12px 0 0;
   color: var(--muted);

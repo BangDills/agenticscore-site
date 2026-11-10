@@ -261,6 +261,28 @@
     });
   });
 
+  /* ---------- Agent prompt panel height ---------- */
+
+  /* Hold the prompt panel to the height of the skill panel above it, so the pair reads as
+     two equal blocks instead of one tall column of prompt text. Re-measured when the
+     skill panel changes size, on resize, and once the webfonts have settled. */
+
+  var skillPanel = document.querySelector(".prompt-skill");
+  var promptPanel = document.querySelector(".prompt-script");
+
+  function fitPromptPanel() {
+    if (!skillPanel || !promptPanel) return;
+    var height = Math.round(skillPanel.getBoundingClientRect().height);
+    if (height > 0) promptPanel.style.height = height + "px";
+  }
+
+  if (skillPanel && promptPanel) {
+    fitPromptPanel();
+    window.addEventListener("resize", fitPromptPanel);
+    if (window.ResizeObserver) new ResizeObserver(fitPromptPanel).observe(skillPanel);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPromptPanel);
+  }
+
   /* ---------- Specification deck (phones only) ---------- */
 
   /* Under 860px the specification rows are laid out as a deck: the first card on top,
