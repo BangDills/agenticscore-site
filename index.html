@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgenticScore: soulbound reputation for Binance Agentic Wallets</title>
+<meta name="description" content="AgenticScore turns verified Binance Agentic Wallet activity into an Agentic Activity Score and mints it as one of 3,000 soulbound NFTs on BNB Smart Chain.">
+<meta name="theme-color" content="#050506">
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Azeret+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a class="wordmark" href="#top">
+      <!-- TODO: placeholder mark. Replace with the project's real logo when one exists. -->
+      <svg class="mark" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M3.5 17.5A10 10 0 0 1 20.5 17.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M12 17.5 17 9.5" fill="none" stroke="#ff4b3a" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="17.5" r="1.8" fill="currentColor"/>
+      </svg>
+      <span>AgenticScore</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+    <nav class="site-nav" id="site-nav" aria-label="Page sections">
+      <ul>
+        <li><a href="#scoring">Scoring</a></li>
+        <li><a href="#rarity">Rarity</a></li>
+        <li><a href="#eligibility">Eligibility</a></li>
+        <li><a href="#mint">Mint</a></li>
+      </ul>
+      <a class="btn btn-primary" href="#eligibility">Check your wallet</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="status-line">Status: MVP in development. Contract, backend, and mint page are not deployed.</p>
+        <h1>Your Activity. Your Score. Your Reputation.</h1>
+        <p class="lede">AgenticScore measures what a verified Binance Agentic Wallet actually does, turns that activity into an Agentic Activity Score, and mints the score as a soulbound NFT on BNB Smart Chain. Supply stops at 3,000, and the tokens cannot be moved to another wallet.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#eligibility">Check your Agent Wallet</a>
+          <a class="btn btn-ghost" href="#scoring">See what the score measures</a>
+        </div>
+        <dl class="fact-row">
+          <div><dt>Network</dt><dd>BNB Smart Chain</dd></div>
+          <div><dt>Supply</dt><dd>3,000</dd></div>
+          <div><dt>Token</dt><dd>Soulbound ERC-721</dd></div>
+        </dl>
+      </div>
+
+      <figure class="meter-panel">
+        <figcaption class="meter-title">Agentic Activity Score</figcaption>
+        <svg class="gauge" viewBox="0 0 400 215" role="img" aria-label="Illustration of the score scale: a meter with a needle resting toward the higher end of the range.">
+          <g class="gauge-ticks">
+            <path class="gauge-arc" d="M50 200A150 150 0 0 1 350 200"/>
+            <line x1="50.0" y1="200.0" x2="64.0" y2="200.0" class="tick-major"/>
+            <line x1="57.3" y1="153.6" x2="64.0" y2="155.8"/>
+            <line x1="78.6" y1="111.8" x2="84.3" y2="115.9"/>
+            <line x1="111.8" y1="78.6" x2="115.9" y2="84.3"/>
+            <line x1="153.6" y1="57.3" x2="155.8" y2="64.0"/>
+            <line x1="200.0" y1="50.0" x2="200.0" y2="64.0" class="tick-major"/>
+            <line x1="246.4" y1="57.3" x2="244.2" y2="64.0"/>
+            <line x1="288.2" y1="78.6" x2="284.1" y2="84.3"/>
+            <line x1="321.4" y1="111.8" x2="315.7" y2="115.9"/>
+            <line x1="342.7" y1="153.6" x2="336.0" y2="155.8"/>
+            <line x1="350.0" y1="200.0" x2="336.0" y2="200.0" class="tick-major"/>
+          </g>
+          <g class="needle-group">
+            <line class="needle" x1="200" y1="200" x2="243.4" y2="90.3"/>
+            <circle class="needle-hub" cx="200" cy="200" r="7"/>
+          </g>
+        </svg>
+        <div class="gauge-ends">
+          <span>less activity</span>
+          <span>more activity</span>
+        </div>
+        <ul class="factor-chips">
+          <li>Activity count</li>
+          <li>Frequency</li>
+          <li>Consistency</li>
+          <li>Recency</li>
+          <li>Diversity</li>
+        </ul>
+        <p class="caption">Illustrative scale, not a live reading. Tier thresholds are set by the project administrator.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="overview">
+    <div class="wrap split">
+      <div class="split-head">
+        <h2>What AgenticScore is</h2>
+        <p>A reputation layer for Binance Agentic Wallets. Wallet activity is measured, converted into a score, and written to chain as a non-transferable NFT. For the MVP, only wallets on the project allowlist can take part.</p>
+      </div>
+      <dl class="spec-table">
+        <div><dt>Collection</dt><dd>AgenticScore NFT</dd></div>
+        <div><dt>Token type</dt><dd>Soulbound, non-transferable</dd></div>
+        <div><dt>Network</dt><dd>BNB Smart Chain</dd></div>
+        <div><dt>Maximum supply</dt><dd>3,000 NFTs</dd></div>
+        <div><dt>Eligibility</dt><dd>Verified Binance Agentic Wallet holders</dd></div>
+        <div><dt>Minting fee</dt><dd>None charged by the project, you pay your own gas</dd></div>
+        <div><dt>Rarity</dt><dd>Set by the Agentic Activity Score</dd></div>
+        <div><dt>Verification</dt><dd>Wallet address plus a cryptographic signature</dd></div>
+        <div><dt>Website</dt><dd>agenticscore.xyz</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section section-supply" id="supply">
+    <div class="wrap supply-grid">
+      <div class="supply-number">
+        <p class="supply-value">3,000</p>
+        <p class="supply-label">maximum NFTs, enforced in the contract</p>
+      </div>
+      <div class="supply-body">
+        <h2>Then it stops.</h2>
+        <ul class="rule-list">
+          <li>Maximum supply is 3,000 NFTs.</li>
+          <li>There is no unlimited minting.</li>
+          <li>Only eligible, verified Binance Agentic Wallets can mint.</li>
+          <li>Each user pays their own blockchain gas fees.</li>
+          <li>The smart contract enforces the cap.</li>
+        </ul>
+        <p class="caption">Minted so far: not published. Minting has not opened.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="scoring">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Five inputs decide the score</h2>
+        <p>The score measures how active an Agent Wallet is, including the total number and the frequency of its activities. More legitimate activity means a higher potential score.</p>
+      </div>
+      <dl class="factor-list">
+        <div>
+          <dt>Activity count</dt>
+          <dd>Total number of recorded Agent Wallet activities. This is the heaviest input.</dd>
+        </div>
+        <div>
+          <dt>Activity frequency</dt>
+          <dd>How often the wallet performs activities.</dd>
+        </div>
+        <div>
+          <dt>Activity consistency</dt>
+          <dd>How steadily the wallet stays active over time.</dd>
+        </div>
+        <div>
+          <dt>Activity recency</dt>
+          <dd>How recently the wallet last acted.</dd>
+        </div>
+        <div>
+          <dt>Activity diversity</dt>
+          <dd>How many different kinds of activity the wallet performs.</dd>
+        </div>
+      </dl>
+      <div class="honesty-block">
+        <h3>What keeps a score honest</h3>
+        <ul class="rule-list">
+          <li>Activity is validated before it counts toward a score.</li>
+          <li>Duplicate activity is discarded.</li>
+          <li>Anti-abuse checks run against the scoring engine.</li>
+          <li>Only eligible and verifiable Agent Wallet activity contributes.</li>
+          <li>Weights and thresholds stay configurable by the project administrator.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-rarity" id="rarity">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Score in, tier out.</h2>
+        <p>Your Agentic Activity Score decides the rarity tier your NFT carries. The administrator sets where each tier begins, so this page does not state the thresholds.</p>
+      </div>
+      <ol class="flow-row">
+        <li><span class="flow-step">01</span><span class="flow-label">Agentic Activity Score</span></li>
+        <li><span class="flow-step">02</span><span class="flow-label">Rarity tier</span></li>
+        <li><span class="flow-step">03</span><span class="flow-label">Soulbound NFT</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section-soulbound" id="soulbound">
+    <div class="wrap split split-narrow">
+      <div class="split-head">
+        <h2>Non-transferable by design</h2>
+        <p>A soulbound token has no normal transfer path. There is nothing to sell and no way to move a reputation into someone else's wallet.</p>
+      </div>
+      <ul class="rule-list">
+        <li>Cannot be transferred between wallets through normal transfer functions.</li>
+        <li>Stays attached to the wallet that minted it.</li>
+        <li>Stands for verified participation and activity reputation, not a tradable asset.</li>
+        <li>Enforced by the smart contract.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="eligibility">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Eligibility and wallet verification</h2>
+        <p>For the MVP, eligibility is managed through an operator-controlled allowlist. A wallet has to be on that list before it can mint.</p>
+      </div>
+      <div class="eligibility-grid">
+        <ol class="step-list">
+          <li>Submit your Binance Agentic Wallet address.</li>
+          <li>The system checks whether the wallet is on the approved allowlist.</li>
+          <li>You sign a verification message with your wallet.</li>
+          <li>The backend verifies the signature and wallet ownership.</li>
+          <li>Eligible wallets continue to minting.</li>
+        </ol>
+        <aside class="security-note">
+          <h3>AgenticScore never asks for:</h3>
+          <ul>
+            <li>Private keys</li>
+            <li>Seed phrases</li>
+            <li>Wallet passwords</li>
+          </ul>
+          <p>Verification is a wallet address plus a signature you approve yourself.</p>
+        </aside>
+      </div>
+
+      <div class="checker" id="wallet-check">
+        <h3>Check a wallet address</h3>
+        <form class="checker-form" novalidate>
+          <label for="wallet-address">Binance Agentic Wallet address</label>
+          <div class="field-row">
+            <input id="wallet-address" name="wallet" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="0x0000000000000000000000000000000000000000" aria-describedby="wallet-hint">
+            <button class="btn btn-primary" type="submit">Check address</button>
+          </div>
+          <p class="hint" id="wallet-hint">The address format is checked in your browser. The allowlist lookup runs in the backend, which is not deployed yet.</p>
+        </form>
+        <div class="checker-result" role="status" aria-live="polite">
+          <p class="result-empty">Nothing checked yet. Paste your Agentic Wallet address above and run the check.</p>
+        </div>
+        <details class="explainer">
+          <summary>What the signature step does</summary>
+          <p>After the allowlist check, your wallet signs a plain verification message. Signing proves you control the address. The backend checks that signature, and only then does mint authorization open. Signing a message does not move funds and does not reveal a key.</p>
+        </details>
+        <p class="caption">Official Binance attestation may be added in a later version, subject to availability and technical compatibility.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="mint">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>How minting will work</h2>
+        <p>Eight steps from address to token. Nothing here is live yet: the contract is not deployed, so the mint button stays disabled.</p>
+      </div>
+      <ol class="mint-steps">
+        <li><span class="step-num">01</span>Connect your Binance Agentic Wallet.</li>
+        <li><span class="step-num">02</span>Submit your wallet address for eligibility verification.</li>
+        <li><span class="step-num">03</span>Sign the wallet verification message.</li>
+        <li><span class="step-num">04</span>The system retrieves or calculates your Agentic Activity Score.</li>
+        <li><span class="step-num">05</span>Your rarity tier is determined.</li>
+        <li><span class="step-num">06</span>Mint your AgenticScore NFT.</li>
+        <li><span class="step-num">07</span>Pay the required gas fee.</li>
+        <li><span class="step-num">08</span>Receive your soulbound NFT in your wallet.</li>
+      </ol>
+      <div class="mint-bar">
+        <div class="mint-contract">
+          <span class="mono-label">Contract address</span>
+          <span class="mono-value">not deployed</span>
+        </div>
+        <div class="mint-actions">
+          <button class="btn btn-primary" type="button" disabled aria-disabled="true">Mint (not open yet)</button>
+          <a class="btn btn-ghost" href="#eligibility">Check eligibility first</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="questions">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Questions this project raises</h2>
+        <p>Short answers to the things people ask first.</p>
+      </div>
+      <div class="qa-list">
+        <details>
+          <summary>Is AgenticScore an official Binance product?</summary>
+          <p>No. AgenticScore is an independent project. It is not an official Binance product unless explicitly announced otherwise. Binance-related wallet verification and activity integrations depend on technical availability, compatibility, and platform permissions.</p>
+        </details>
+        <details>
+          <summary>Can I transfer or sell the NFT?</summary>
+          <p>No. The token is soulbound. It cannot be transferred between wallets through normal transfer functions and it stays attached to the wallet that minted it.</p>
+        </details>
+        <details>
+          <summary>What does minting cost?</summary>
+          <p>The project charges no minting fee. You pay the blockchain gas fee for your own transaction on BNB Smart Chain.</p>
+        </details>
+        <details>
+          <summary>Will you ever ask for my private key or seed phrase?</summary>
+          <p>No. Verification uses your wallet address and a signature you approve. Private keys, seed phrases, and wallet passwords are never requested or stored.</p>
+        </details>
+        <details>
+          <summary>How is my rarity tier decided?</summary>
+          <p>Your Agentic Activity Score decides the tier. The administrator configures where each tier starts, and those thresholds are not published on this page.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="wordmark footer-wordmark">AgenticScore</p>
+      <p class="footer-note">Independent project. Not an official Binance product unless explicitly announced otherwise.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#scoring">Scoring</a>
+      <a href="#eligibility">Eligibility</a>
+      <a href="#mint">Mint</a>
+      <a href="https://github.com/BangDills/agenticscore-site">Source on GitHub</a>
+    </div>
+  </div>
+  <div class="wrap footer-legal">
+    <p>MVP specification page. No wallet connection, no contract, and no minting are live on this site.</p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
