@@ -348,6 +348,10 @@ button:disabled, input:disabled { cursor: not-allowed; }
 }
 .spec-table dd { margin: 0; font-size: 0.95rem; }
 
+/* Rail readout for the mobile card rail. Hidden while the rows are a table. */
+
+.rail-meta { display: none; }
+
 /* Supply: the cap is the headline figure, so it takes the largest type on the page. */
 
 .section-supply { background: var(--bg-deep); }
@@ -702,8 +706,59 @@ button:disabled, input:disabled { cursor: not-allowed; }
   .site-nav ul a { display: block; padding: 12px 0; font-size: 0.98rem; color: var(--text); }
   .site-nav .btn { width: 100%; }
   .hero { padding: 56px 0 48px; }
-  .spec-table > div,
   .result-grid > div { grid-template-columns: 1fr; gap: 4px; }
+
+  /* On a phone the specification rows stop being a table and become a card rail:
+     one card per row, swiped horizontally, snapped, with a position readout. */
+  .spec-table {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .spec-table::-webkit-scrollbar { display: none; }
+  .spec-table > div {
+    display: block;
+    flex: 0 0 76%;
+    scroll-snap-align: start;
+    padding: 18px;
+    background: var(--panel);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-lg);
+  }
+  .spec-table dt { padding-top: 0; margin-bottom: 10px; }
+  .spec-table dd { font-size: 1rem; line-height: 1.45; }
+  /* The rail itself takes the tab stop, so the ring goes on the rail. */
+  .spec-table:focus-visible { outline: 2px solid var(--blue-bright); outline-offset: 3px; }
+
+  .rail-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted-2);
+  }
+  .rail-bar {
+    position: relative;
+    flex: 1;
+    height: 2px;
+    overflow: hidden;
+    background: var(--line-2);
+  }
+  .rail-bar-fill {
+    position: absolute;
+    inset: 0;
+    background: var(--blue-bright);
+    transform: scaleX(0.1429);
+    transform-origin: left center;
+    transition: transform 0.15s linear;
+  }
+  .rail-hint { flex: none; }
   .checker, .honesty-block { padding: 20px 18px; }
   .mint-bar { flex-direction: column; align-items: stretch; }
   .mint-actions .btn { width: 100%; }
@@ -713,6 +768,7 @@ button:disabled, input:disabled { cursor: not-allowed; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .glint::after { display: none; }
+  .rail-bar-fill { transition: none; }
   .spinner { animation: none; border-top-color: var(--line-2); border-left-color: var(--blue-bright); }
   .btn, .skip-link { transition: none; }
 }

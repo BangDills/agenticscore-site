@@ -252,4 +252,60 @@
       settle(false);
     });
   }
+
+  /* ---------- Specification rail (phones only) ---------- */
+
+  /* Under 860px the spec rows are laid out as a horizontal card rail, so the container
+     needs a tab stop to be scrollable by keyboard, and the readout under it needs to
+     follow the real scroll position. Above that width the rows are a plain table and
+     none of this applies, including the extra tab stop. */
+
+  var spec = document.querySelector(".spec-table");
+  var railQuery = window.matchMedia("(max-width: 860px)");
+
+  if (spec && railQuery) {
+    var cards = Array.prototype.slice.call(spec.children);
+    var railCount = document.querySelector(".rail-count");
+    var railFill = document.querySelector(".rail-bar-fill");
+
+    function pad(value) {
+      return (value < 10 ? "0" : "") + value;
+    }
+
+    function nearestCard() {
+      var best = 0;
+      var bestDistance = Infinity;
+      cards.forEach(function (card, index) {
+        var distance = Math.abs(card.offsetLeft - spec.scrollLeft);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          best = index;
+        }
+      });
+      return best;
+    }
+
+    function syncRail() {
+      var scrollable = spec.scrollWidth - spec.clientWidth;
+      var progress = scrollable > 0 ? spec.scrollLeft / scrollable : 0;
+      if (railCount) railCount.textContent = pad(nearestCard() + 1) + " / " + pad(cards.length);
+      if (railFill) railFill.style.transform = "scaleX(" + Math.max(progress, 1 / cards.length).toFixed(4) + ")";
+    }
+
+    function applyRailMode() {
+      if (railQuery.matches) {
+        spec.setAttribute("tabindex", "0");
+        spec.setAttribute("aria-label", "Project specification. Swipe, or use the arrow keys.");
+      } else {
+        spec.removeAttribute("tabindex");
+        spec.removeAttribute("aria-label");
+      }
+      syncRail();
+    }
+
+    spec.addEventListener("scroll", syncRail, { passive: true });
+    window.addEventListener("resize", syncRail);
+    if (railQuery.addEventListener) railQuery.addEventListener("change", applyRailMode);
+    applyRailMode();
+  }
 })();
