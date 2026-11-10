@@ -77,6 +77,11 @@ then rebuilt for this project, not copied wholesale:
   300, the answer in `#abb2ca` at weight 200, and the toggle is two 2px bars that overlap
   into a minus when the card is open. Native `details`/`summary` carries it, so it works
   without JavaScript and the card takes the focus ring.
+- Footer: the mark sits before the name, the name is set in caps, and X, BscScan and
+  Sourcify are the reference's own footer buttons (36px square, 8px radius, `#10111a`
+  fill, `#272c3a` border, 20px mark, shadow on hover). `-webkit-tap-highlight-color:
+  transparent` is set globally, the line the reference ships, so tapping a block never
+  flashes the platform highlight.
 - The mark is the project's own artwork (wallet plus score gauge), converted to a white
   transparent PNG for the header and plated on navy for the favicon and touch icon. The
   source file was a 2048px JPEG; if an SVG original exists, drop it in and it will be

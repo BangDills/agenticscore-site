@@ -40,6 +40,10 @@
   --glint-period: 0.9s;
 }
 
+/* Taps should not flash the platform highlight over the blocks. Same line the reference
+   ships, and it is why its cards stay still on touch. */
+html { -webkit-tap-highlight-color: transparent; }
+
 *,
 *::before,
 *::after { box-sizing: border-box; }
@@ -716,11 +720,30 @@ button:disabled, input:disabled { cursor: not-allowed; }
   justify-content: space-between;
   align-items: flex-start;
 }
-.footer-wordmark { margin: 0 0 12px; }
+/* Footer brand: the mark, then the name in caps, then the platform tiles. Tile values
+   are the reference's own footer buttons: 36px square, 8px radius, slate-900 fill,
+   slate-400 border, a 20px mark, and a shadow on hover. */
+
+.footer-brandline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.footer-mark { display: block; width: 32px; height: 32px; flex: none; }
+.footer-wordmark {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--text);
+}
 .footer-logos {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -729,13 +752,15 @@ button:disabled, input:disabled { cursor: not-allowed; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--r);
-  transition: background-color 0.15s ease;
+  width: 36px;
+  height: 36px;
+  background: #10111a;
+  border: 1px solid #272c3a;
+  border-radius: 8px;
+  transition: box-shadow 0.12s ease-in-out;
 }
-.footer-logos a:hover { background: rgba(235, 240, 246, 0.07); }
-.footer-logos img { display: block; width: 26px; height: 26px; }
+.footer-logos a:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45); }
+.footer-logos img { display: block; width: 20px; height: 20px; opacity: 0.9; }
 .footer-links { display: flex; flex-wrap: wrap; gap: 12px 22px; }
 .footer-links a {
   color: var(--muted);
