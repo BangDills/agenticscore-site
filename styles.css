@@ -125,10 +125,19 @@ button:disabled, input:disabled { cursor: not-allowed; }
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 40;
+  border-bottom: 1px solid var(--line);
+}
+/* The blur sits on a pseudo element rather than the header itself: backdrop-filter on an
+   ancestor would make the header the containing block for the fixed drawer, and the
+   drawer would then be trapped inside the header's box. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background: rgba(10, 13, 22, 0.82);
   backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--line);
 }
 
 .nav-row {
@@ -172,18 +181,52 @@ button:disabled, input:disabled { cursor: not-allowed; }
 .site-nav .btn-primary,
 .site-nav .btn-primary:hover { color: #ffffff; }
 
+/* Three lines, no box: the drawer's trigger carries no border or fill. */
 .nav-toggle {
   display: none;
-  padding: 8px 14px;
-  font: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-right: -11px;
+  padding: 0;
   color: var(--text);
-  background: transparent;
-  border: 1px solid var(--control-line);
-  border-radius: var(--r);
+  background: none;
+  border: 0;
 }
-.nav-toggle:hover { background: rgba(255, 255, 255, 0.05); }
+.nav-toggle-bars {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 14px;
+}
+.nav-toggle-bars span {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+  border-radius: 999px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+.nav-toggle-bars span:nth-child(1) { top: 0; }
+.nav-toggle-bars span:nth-child(2) { top: 6px; }
+.nav-toggle-bars span:nth-child(3) { top: 12px; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .nav-toggle-bars span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+.nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  background: rgba(4, 6, 11, 0.66);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+.nav-backdrop[data-open="true"] { opacity: 1; pointer-events: auto; }
 
 /* ---------- Buttons ---------- */
 
@@ -789,24 +832,43 @@ button:disabled, input:disabled { cursor: not-allowed; }
 }
 
 @media (max-width: 860px) {
-  .nav-toggle { display: inline-flex; }
+  .nav-toggle { display: inline-flex; position: relative; z-index: 30; }
+  /* The drawer: a panel that slides in from the right, above the backdrop and below the
+     header row, so the trigger stays reachable as a close button. */
   .site-nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
+    position: fixed;
+    top: 0;
     right: 0;
+    bottom: 0;
+    z-index: 25;
+    width: min(84vw, 340px);
     flex-direction: column;
     align-items: stretch;
-    gap: 16px;
-    padding: 20px 24px 24px;
+    gap: 6px;
+    padding: 84px 22px 28px;
+    overflow-y: auto;
     background: #0d111b;
-    border-bottom: 1px solid var(--line-2);
+    border-left: 1px solid var(--line-2);
+    box-shadow: -24px 0 60px rgba(0, 0, 0, 0.5);
+    transform: translateX(102%);
+    visibility: hidden;
+    transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 0.28s;
   }
-  .site-nav[data-open="true"] { display: flex; }
-  .site-nav ul { flex-direction: column; gap: 2px; }
-  .site-nav ul a { display: block; padding: 12px 0; font-size: 0.98rem; color: var(--text); }
-  .site-nav .btn { width: 100%; }
+  .site-nav[data-open="true"] {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s;
+  }
+  .nav-backdrop { display: block; }
+  .site-nav ul { flex-direction: column; gap: 0; }
+  .site-nav ul a {
+    display: block;
+    padding: 15px 0;
+    font-size: 1.05rem;
+    color: var(--text);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-nav .btn { width: 100%; margin-top: 16px; }
   .hero { padding: 56px 0 48px; }
   .result-grid > div { grid-template-columns: 1fr; gap: 4px; }
 
@@ -870,6 +932,8 @@ button:disabled, input:disabled { cursor: not-allowed; }
   html { scroll-behavior: auto; }
   .glint::after { display: none; }
   .deck-ready .spec-table > div { transition: none; }
+  .site-nav, .site-nav[data-open="true"], .nav-backdrop { transition: none; }
+  .nav-toggle-bars span { transition: none; }
   .qa-list summary { transition: none; }
   .qa-mark span:last-child { transition: none; }
   .qa-list details[open] p { animation: none; }

@@ -9,36 +9,73 @@
 
   var EVM_ADDRESS = /^0x[0-9a-fA-F]{40}$/;
 
-  /* ---------- Mobile navigation ---------- */
+  /* ---------- Header drawer (phones) ---------- */
+
+  /* The header menu on a phone is a drawer: the three-line button opens a panel that
+     slides in from the right, the backdrop or Escape closes it, Tab wraps inside it
+     while it is open, and focus goes back to the button when it closes. Above 860px the
+     same markup is the plain inline row, so none of this runs. */
 
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("site-nav");
+  var backdrop = document.querySelector(".nav-backdrop");
 
-  function setNav(open) {
+  function navOpen() {
+    return nav && nav.getAttribute("data-open") === "true";
+  }
+
+  function setNav(open, returnFocus) {
     if (!toggle || !nav) return;
     nav.setAttribute("data-open", open ? "true" : "false");
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
-    toggle.textContent = open ? "Close" : "Menu";
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+    if (backdrop) backdrop.setAttribute("data-open", open ? "true" : "false");
+    document.body.style.overflow = open ? "hidden" : "";
+    if (open) {
+      var first = nav.querySelector("a[href]");
+      if (first) first.focus();
+    } else if (returnFocus) {
+      toggle.focus();
+    }
   }
 
   if (toggle && nav) {
     toggle.addEventListener("click", function () {
-      setNav(nav.getAttribute("data-open") !== "true");
+      setNav(!navOpen());
     });
 
     nav.addEventListener("click", function (event) {
       if (event.target.closest("a")) setNav(false);
     });
 
+    if (backdrop) {
+      backdrop.addEventListener("click", function () {
+        setNav(false, true);
+      });
+    }
+
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && nav.getAttribute("data-open") === "true") {
-        setNav(false);
-        toggle.focus();
+      if (event.key === "Escape" && navOpen()) setNav(false, true);
+    });
+
+    /* Keep Tab inside the drawer while it is open. */
+    nav.addEventListener("keydown", function (event) {
+      if (event.key !== "Tab" || !navOpen()) return;
+      var items = nav.querySelectorAll("a[href], button:not([disabled])");
+      if (!items.length) return;
+      var first = items[0];
+      var last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
       }
     });
 
     window.addEventListener("resize", function () {
-      if (window.innerWidth > 860) setNav(false);
+      if (window.innerWidth > 860 && navOpen()) setNav(false);
     });
   }
 
