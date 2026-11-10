@@ -31,8 +31,8 @@
     var timeline = gsap.timeline({ defaults: { ease: "power3.out", duration: 0.7 } });
 
     timeline
-      .from(".hero-copy > *", { y: 20, autoAlpha: 0, stagger: 0.08 })
-      .from(".meter-panel", { y: 16, autoAlpha: 0, duration: 0.8 }, "-=0.55")
+      .from(".hero-copy > *", { y: 20, opacity: 0, stagger: 0.08 })
+      .from(".meter-panel", { y: 16, opacity: 0, duration: 0.8 }, "-=0.55")
       .from(
         ".needle-group",
         { rotation: -30, svgOrigin: "200 200", duration: 1.2, ease: "power2.out" },
@@ -46,7 +46,10 @@
       var targets = staggered ? Array.prototype.slice.call(el.children) : el;
       gsap.from(targets, {
         y: 22,
-        autoAlpha: 0,
+        /* opacity, not autoAlpha: autoAlpha also sets visibility:hidden, which would take
+           every below-fold section out of the accessibility tree and out of the tab order
+           until the visitor scrolls. Fading alone keeps the content reachable. */
+        opacity: 0,
         duration: 0.65,
         ease: "power3.out",
         stagger: staggered ? 0.06 : 0,
