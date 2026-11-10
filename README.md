@@ -1,14 +1,17 @@
 # agenticscore-site
 
 Static site for the AgenticScore project: a soulbound NFT that carries a Binance
-Agentic Wallet's activity reputation. Three files, no build step, no dependencies.
+Agentic Wallet's activity reputation. No build step, no framework, no third-party
+runtime request.
 
 ```
-index.html    page structure and content
-styles.css    design tokens, layout, states
-app.js        section nav and the wallet address check
+index.html        page structure and content
+styles.css        design tokens, layout, states
+app.js            section nav and the wallet address check
+motion.js         GSAP reveal and counter layer
+assets/vendor/    GSAP 3.13.0 (gsap + ScrollTrigger), see its README for the licence
 assets/mark.svg   placeholder favicon mark
-SCORING.md    draft scoring spec for the backend (values not published on the page)
+SCORING.md        draft scoring spec for the backend (values not published on the page)
 ```
 
 ## Run locally
@@ -22,7 +25,9 @@ python3 -m http.server 8080
 
 Any static host. On Vercel: import the repo, leave the framework preset as
 **Other**, build command empty, output directory the repo root. The custom
-domain is pointed in Vercel's dashboard, not in this repo.
+domain is pointed in Vercel's dashboard, not in this repo. `vercel.json` carries
+the security headers, including a CSP that allows only same-origin scripts plus
+Google Fonts.
 
 ## What is live and what is not
 
@@ -45,10 +50,33 @@ The page is honest about its own state, and it should stay that way:
 
 ## Design notes
 
-- Palette: void black canvas, white text, silver neutrals, one vermilion accent
-  (`#ff4b3a`) reserved for the meter needle and small data labels.
-- Type: Archivo for display and body, Azeret Mono for measured data (addresses,
-  step numbers, field labels).
-- The gauge is the identity motif: the product is a score, so the score meter is
-  the hero visual rather than a mock product screenshot.
+The visual language was measured from arkm.com (its CSS, its fonts, its keyframes) and
+then rebuilt for this project, not copied wholesale:
+
+- Canvas `#0a0d16`, the reference's body background: near-black navy, not pure black.
+- One accent. `#2563eb` fills buttons (`#ffffff` on it is 4.78:1), `#6da3ff` carries links
+  and figures (7.7:1 on the canvas). `#2563eb` never holds small text, it is only 3.75:1.
+- Type: Archivo at weight 200 for the large headlines with -0.038em tracking, the
+  reference's thin-display gesture. IBM Plex Mono for addresses, figures, step numbers
+  and field labels, the same mono the reference uses.
+- Radii 4/6/10px. No pills: shape carries hierarchy, controls stay rectangular.
+- Panels are `#10111a` with a hairline border and a light top edge, and two of them carry
+  a light-sweep "glint" on hover, the reference's `--glint-period` device.
+- The gauge is this project's own motif: the product is a score, so the score meter is the
+  hero visual rather than a mock product screenshot.
 - `assets/mark.svg` is a placeholder mark, not a designed logo. Replace it.
+
+## Motion
+
+GSAP 3.13 + ScrollTrigger, vendored in `assets/vendor/` so no third-party script is
+loaded at runtime and the CSP stays at `script-src 'self'`. `motion.js` holds all of it:
+
+- hero: copy, stat strip, panel and needle rise and settle once on load;
+- sections: heads, lists and panels fade up once on first entry;
+- supply: the 3,000 figure counts up once when it enters the viewport.
+
+Nothing loops, nothing is pinned, nothing scrubs. Every animation is registered inside
+`gsap.matchMedia()`, so under `prefers-reduced-motion: reduce` none is created and the
+markup's own state is what ships. The needle has no CSS animation either: its SVG
+position is already the settled reading, so a browser without JavaScript shows a still,
+correct meter.

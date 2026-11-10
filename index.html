@@ -8,11 +8,11 @@
 <meta property="og:title" content="AgenticScore: soulbound reputation for Binance Agentic Wallets">
 <meta property="og:description" content="Rank by wallet activity. The top 100 share a 1,000 USDT reward pool every week.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#050506">
+<meta name="theme-color" content="#0a0d16">
 <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Azeret+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -24,7 +24,7 @@
       <!-- TODO: placeholder mark. Replace with the project's real logo when one exists. -->
       <svg class="mark" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
         <path d="M3.5 17.5A10 10 0 0 1 20.5 17.5" fill="none" stroke="currentColor" stroke-width="1.6"/>
-        <path d="M12 17.5 17 9.5" fill="none" stroke="#ff4b3a" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 17.5 17 9.5" fill="none" stroke="#6da3ff" stroke-width="2" stroke-linecap="round"/>
         <circle cx="12" cy="17.5" r="1.8" fill="currentColor"/>
       </svg>
       <span>AgenticScore</span>
@@ -53,15 +53,15 @@
           <a class="btn btn-primary" href="#eligibility">Check your wallet</a>
           <a class="btn btn-ghost" href="#scoring">How the score works</a>
         </div>
-        <dl class="fact-row">
+        <dl class="stat-strip">
           <div><dt>Network</dt><dd>BNB Smart Chain</dd></div>
           <div><dt>Supply</dt><dd>3,000</dd></div>
           <div><dt>Token</dt><dd>Soulbound ERC-721</dd></div>
-          <div><dt>Reward pool</dt><dd>1,000 USDT per week</dd></div>
+          <div><dt>Reward pool</dt><dd>1,000 USDT / week</dd></div>
         </dl>
       </div>
 
-      <figure class="meter-panel">
+      <figure class="meter-panel glint">
         <figcaption class="meter-title">Agentic Activity Score</figcaption>
         <svg class="gauge" viewBox="0 0 400 215" role="img" aria-label="Illustration of the score scale: a meter with a needle resting toward the higher end of the range.">
           <g class="gauge-ticks">
@@ -94,11 +94,11 @@
 
   <section class="section" id="overview">
     <div class="wrap split">
-      <div class="split-head">
+      <div class="split-head" data-reveal>
         <h2>What AgenticScore is</h2>
         <p>A reputation layer for Binance Agentic Wallets. Wallet activity is measured and turned into a score that ranks you on the leaderboard. Joining takes one non-transferable NFT, identical for every wallet. During the MVP, only wallets on the project allowlist can take part.</p>
       </div>
-      <dl class="spec-table">
+      <dl class="spec-table" data-reveal data-stagger>
         <div><dt>Collection</dt><dd>AgenticScore NFT</dd></div>
         <div><dt>Eligibility</dt><dd>Verified Binance Agentic Wallet holders</dd></div>
         <div><dt>Score</dt><dd>Open-ended, with no maximum</dd></div>
@@ -112,11 +112,11 @@
 
   <section class="section section-supply" id="supply">
     <div class="wrap supply-grid">
-      <div class="supply-number">
-        <p class="supply-value">3,000</p>
+      <div class="supply-number" data-reveal>
+        <p class="supply-value" data-count="3000">3,000</p>
         <p class="supply-label">maximum supply, enforced by the contract</p>
       </div>
-      <div class="supply-body">
+      <div class="supply-body" data-reveal data-stagger>
         <h2>Capped, and non-transferable</h2>
         <ul class="rule-list">
           <li>No unlimited minting. When 3,000 NFTs exist, minting ends.</li>
@@ -131,11 +131,11 @@
 
   <section class="section" id="scoring">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2>What counts toward your score</h2>
         <p>Your score comes from verified activity in your wallet. Each kind of activity earns points, but every extra repeat of the same kind adds a little less than the last. Spam barely helps, real activity still moves you up, and there is no maximum score.</p>
       </div>
-      <dl class="factor-list">
+      <dl class="factor-list" data-reveal data-stagger>
         <div>
           <dt>Token swaps</dt>
           <dd>Weighted highest.</dd>
@@ -155,7 +155,7 @@
       </dl>
 
       <div class="scoring-foot">
-        <div class="honesty-block">
+        <div class="honesty-block" data-reveal>
           <h3>How scores stay honest</h3>
           <ul class="rule-list">
             <li>Each transaction counts once.</li>
@@ -170,13 +170,13 @@
 
   <section class="section" id="eligibility">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2>Check your wallet</h2>
         <p>During the MVP, an operator-managed allowlist decides who can mint. Paste your address to confirm its format. The allowlist lookup starts working once the backend is deployed.</p>
       </div>
 
       <div class="eligibility-grid">
-        <div class="checker" id="wallet-check">
+        <div class="checker" id="wallet-check" data-reveal>
           <form class="checker-form" novalidate>
             <label for="wallet-address">Binance Agentic Wallet address</label>
             <div class="field-row">
@@ -195,18 +195,18 @@
 
   <section class="section" id="mint">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2>How minting will work</h2>
         <p>You mint through your own agent. None of this is live yet: the contract is not deployed, so the prompt cannot mint anything.</p>
       </div>
-      <ol class="mint-steps">
+      <ol class="mint-steps" data-reveal data-stagger>
         <li><span class="step-num">1</span><span>Copy the prompt below into the agent that controls your Binance Agentic Wallet.</span></li>
         <li><span class="step-num">2</span><span>The agent reads the official contract address and checks your wallet against the allowlist.</span></li>
         <li><span class="step-num">3</span><span>The agent signs the verification message, shows you the gas estimate, and waits for your approval.</span></li>
         <li><span class="step-num">4</span><span>The agent mints your soulbound NFT. It arrives in your wallet.</span></li>
         <li><span class="step-num">5</span><span>The agent reports your score. Your wallet joins the leaderboard.</span></li>
       </ol>
-      <div class="mint-bar">
+      <div class="mint-bar" data-reveal>
         <div class="mint-contract">
           <span class="mono-label">Contract address</span>
           <span class="mono-value">Not deployed</span>
@@ -221,12 +221,12 @@
 
   <section class="section" id="agent">
     <div class="wrap split">
-      <div class="split-head">
+      <div class="split-head" data-reveal>
         <h2>Mint with your own agent</h2>
         <p>Copy this prompt into the agent that controls your Binance Agentic Wallet. It tells the agent to check the official contract first, ask for your approval before anything costs gas, mint once, and tell you your score.</p>
         <p class="caption">Minting is not open. The prompt only works after a contract address is published on this site.</p>
       </div>
-      <div class="prompt-block">
+      <div class="prompt-block glint" data-reveal>
         <div class="prompt-head">
           <span class="mono-label">Prompt for your agent</span>
           <button class="btn btn-ghost btn-small" type="button" id="copy-prompt">Copy prompt</button>
@@ -256,7 +256,7 @@ Rules:
 
   <section class="section section-supply" id="leaderboard">
     <div class="wrap split">
-      <div class="split-head">
+      <div class="split-head" data-reveal>
         <h2>Leaderboard</h2>
         <p>Wallets are ranked by Agentic Activity Score. Every 7 days, the top 100 share a 1,000 USDT reward pool.</p>
         <ul class="rule-list">
@@ -267,7 +267,7 @@ Rules:
           <li>If two wallets tie, the one that minted its AgenticScore NFT first ranks higher.</li>
         </ul>
       </div>
-      <div class="board">
+      <div class="board" data-reveal>
         <table class="board-table">
           <caption class="visually-hidden">Top 100 wallets by Agentic Activity Score</caption>
           <thead>
@@ -300,10 +300,10 @@ Rules:
 
   <section class="section" id="questions">
     <div class="wrap">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2>Frequently asked questions</h2>
       </div>
-      <div class="qa-list">
+      <div class="qa-list" data-reveal data-stagger>
         <details>
           <summary>Is AgenticScore an official Binance product?</summary>
           <p>No. It is an independent project. Any Binance wallet verification or activity integration depends on technical availability, compatibility, and platform permissions.</p>
@@ -339,7 +339,7 @@ Rules:
 </main>
 
 <footer class="site-footer">
-  <div class="wrap footer-grid">
+  <div class="wrap footer-grid" data-reveal>
     <div>
       <p class="wordmark footer-wordmark">AgenticScore</p>
       <p class="footer-note">An independent project, not an official Binance product.</p>
@@ -358,6 +358,9 @@ Rules:
   </div>
 </footer>
 
+<script src="assets/vendor/gsap.min.js" defer></script>
+<script src="assets/vendor/ScrollTrigger.min.js" defer></script>
 <script src="app.js" defer></script>
+<script src="motion.js" defer></script>
 </body>
 </html>
