@@ -520,7 +520,7 @@ button:disabled, input:disabled { cursor: not-allowed; }
   border: 1px solid var(--line);
   border-radius: var(--r-input);
 }
-.field-row input::placeholder { color: #6a6a75; }
+.field-row input::placeholder { color: #8b8b96; }
 .field-row input:focus { border-color: var(--signal); outline: none; }
 .field-row input:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
 .hint { margin: 12px 0 0; max-width: 60ch; }
