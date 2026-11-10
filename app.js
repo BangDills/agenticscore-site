@@ -220,4 +220,36 @@
       );
     });
   }
+
+  /* ---------- Copy agent prompt ---------- */
+
+  var copyButton = document.getElementById("copy-prompt");
+  var promptText = document.getElementById("agent-prompt");
+
+  if (copyButton && promptText) {
+    copyButton.addEventListener("click", function () {
+      function settle(ok) {
+        if (!ok && window.getSelection) {
+          var range = document.createRange();
+          range.selectNodeContents(promptText);
+          var selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+        copyButton.textContent = ok ? "Copied" : "Selected, press Ctrl or Cmd + C";
+        window.setTimeout(function () {
+          copyButton.textContent = "Copy prompt";
+        }, 2600);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(promptText.textContent).then(
+          function () { settle(true); },
+          function () { settle(false); }
+        );
+        return;
+      }
+      settle(false);
+    });
+  }
 })();

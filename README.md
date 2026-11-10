@@ -8,6 +8,7 @@ index.html    page structure and content
 styles.css    design tokens, layout, states
 app.js        section nav and the wallet address check
 assets/mark.svg   placeholder favicon mark
+SCORING.md    draft scoring spec for the backend (values not published on the page)
 ```
 
 ## Run locally
@@ -27,12 +28,19 @@ domain is pointed in Vercel's dashboard, not in this repo.
 
 The page is honest about its own state, and it should stay that way:
 
-- No contract is deployed, so the mint button is disabled on purpose.
+- No contract is deployed, so there is no mint button. Minting happens through the agent
+  prompt, which tells the agent to stop unless a contract address is published on the site.
 - The wallet check validates EVM address format in the browser. The allowlist
   lookup needs the verification backend; set `window.AGENTICSCORE_API` to the
   endpoint URL to turn that path on, and the loading, success, and error states
   start working against real data.
-- No statistics, mint counts, tier names, or tier thresholds are published,
+- The leaderboard is an empty table on purpose. Scores are open-ended, the top 100
+  share a 1,000 USDT pool every week, paid from a separate wallet at the end of each
+  7-day snapshot. The rank-band split is published; the first snapshot date and the minimum score to qualify are not. No contract is configured
+  for rewards. There are no rarity tiers: every NFT is identical.
+- The agent prompt has a placeholder for the wallet address and tells the agent to read
+  the contract address from the site, so no address is hardcoded.
+- No statistics or mint counts are published,
   because the project has not published them.
 
 ## Design notes
