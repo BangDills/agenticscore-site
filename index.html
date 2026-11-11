@@ -51,28 +51,14 @@
           <a class="btn btn-primary" href="#eligibility">Check your wallet</a>
           <a class="btn btn-ghost" href="#scoring">How the score works</a>
         </div>
-        <dl class="stat-strip">
-          <div><dt>Network</dt><dd>BNB Smart Chain</dd></div>
-          <div><dt>Supply</dt><dd>3,000</dd></div>
-          <div><dt>Mint price</dt><dd>Free, gas only</dd></div>
-          <div><dt>Reward pool</dt><dd>1,000 USDT / week</dd></div>
-        </dl>
       </div>
 
-      <figure class="meter-panel glint">
-        <div class="supply-head">
-          <figcaption class="meter-title">Mint supply</figcaption>
-          <span class="supply-status" id="supply-status">Not open</span>
-        </div>
-        <p class="supply-readout">
-          <span class="supply-count" id="supply-minted">0</span>
-          <span class="supply-unit">of 3,000 minted</span>
-        </p>
-        <div class="supply-track" id="supply-track" role="progressbar" aria-label="NFTs minted out of 3,000" aria-valuemin="0" aria-valuemax="3000" aria-valuenow="0">
-          <span class="supply-fill" id="supply-fill"></span>
-        </div>
-        <p class="caption" id="supply-state">Minting has not opened, so nothing is minted. Once it does, this counter reads the contract.</p>
-      </figure>
+      <dl class="stat-strip">
+        <div><dt>Network</dt><dd>BNB Smart Chain</dd></div>
+        <div><dt>Supply</dt><dd>3,000</dd></div>
+        <div><dt>Mint price</dt><dd>Free, gas only</dd></div>
+        <div><dt>Reward pool</dt><dd>1,000 USDT / week</dd></div>
+      </dl>
     </div>
   </section>
 
@@ -150,6 +136,29 @@
           </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="mint-supply">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>Mint supply</h2>
+        <p>The collection stops at 3,000 NFTs, enforced by the contract. This counter reads the contract, so it only moves when a real mint lands on chain.</p>
+      </div>
+      <figure class="meter-panel glint" data-reveal>
+        <div class="supply-head">
+          <figcaption class="meter-title">Minted so far</figcaption>
+          <span class="supply-status" id="supply-status">Not open</span>
+        </div>
+        <p class="supply-readout">
+          <span class="supply-count" id="supply-minted">0</span>
+          <span class="supply-unit">of 3,000 minted</span>
+        </p>
+        <div class="supply-track" id="supply-track" role="progressbar" aria-label="NFTs minted out of 3,000" aria-valuemin="0" aria-valuemax="3000" aria-valuenow="0">
+          <span class="supply-fill" id="supply-fill"></span>
+        </div>
+        <p class="caption" id="supply-state">Minting has not opened, so nothing is minted. Once it does, this counter reads the contract.</p>
+      </figure>
     </div>
   </section>
 
