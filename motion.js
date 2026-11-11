@@ -29,7 +29,14 @@
   });
 
   mm.add("(prefers-reduced-motion: no-preference)", function () {
-    var timeline = gsap.timeline({ defaults: { ease: "power3.out", duration: 0.7 } });
+    /* While the splash is up, the hero waits. It plays as the splash fades, not behind it.
+       The "intro-done" class covers a splash that ended before this script ran. */
+    var root = document.documentElement;
+    var waiting = root.classList.contains("intro-running") && !root.classList.contains("intro-done");
+    var timeline = gsap.timeline({ paused: waiting, defaults: { ease: "power3.out", duration: 0.7 } });
+    if (waiting) {
+      document.addEventListener("intro:done", function () { timeline.play(); }, { once: true });
+    }
 
     timeline
       .from(".hero-copy > *", { y: 20, opacity: 0, stagger: 0.08 })

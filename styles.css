@@ -7,9 +7,10 @@
    Reasons for the load-bearing decisions:
    - canvas #0a0d16 rather than pure black: the reference's own body background, and
      it gives the accent room without reaching for a gradient.
-   - one accent: #2563eb as a button fill (#f2f6ff text on it is 4.78:1), #6da3ff for
-     links and figures (7.7:1 on the canvas). #2563eb alone is 3.75:1, so it never
-     carries small text.
+   - one accent: #3263af as a button fill, sampled from the reference's "Sign up for free"
+     button (white text on it is 5.93:1), #6da3ff for links and figures (7.7:1 on the
+     canvas). #3263af alone is 3.27:1 on the canvas, so it never carries small text.
+     The hover fill, #2c579a, is a darker step chosen here, not sampled.
    - radii 4/6/10px and no pills: shape carries hierarchy, controls stay rectangular.
    - IBM Plex Mono for addresses, figures, step numbers and field labels, the same
      mono the reference uses, so measured data reads as machine output.
@@ -29,8 +30,8 @@
   --muted: rgba(235, 240, 246, 0.72);
   --muted-2: rgba(235, 240, 246, 0.58);
   --danger: #ff9aa5;
-  --blue: #2563eb;
-  --blue-hover: #1d4ed8;
+  --blue: #3263af;
+  --blue-hover: #2c579a;
   --blue-bright: #6da3ff;
   --font-sans: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -1011,4 +1012,76 @@ a.skill-url:hover { text-decoration: underline; text-underline-offset: 3px; }
   .qa-list details[open] p { animation: none; }
   .spinner { animation: none; border-top-color: var(--line-2); border-left-color: var(--blue-bright); }
   .btn, .skip-link { transition: none; }
+}
+
+/* ---------- Intro ---------- */
+
+/* Hidden unless intro.js switches it on, so no script means no splash and nothing in the way. */
+.intro { display: none; }
+html.intro-running { overflow: hidden; }
+html.intro-running .intro {
+  display: grid;
+  place-items: center;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--bg);
+  cursor: pointer;
+  /* Backstop: if the script stops half way, the splash still leaves. */
+  animation: intro-failsafe 0.4s ease 4.6s forwards;
+}
+.intro.intro-leaving {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s ease;
+}
+@keyframes intro-failsafe {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+.intro-inner {
+  width: min(92vw, 520px);
+  text-align: center;
+}
+.intro-title {
+  margin: 0 0 28px;
+  font-size: clamp(2rem, 8.4vw, 3.6rem);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text);
+  animation: intro-title-in 0.8s ease both;
+}
+@keyframes intro-title-in {
+  from { opacity: 0; transform: translateY(8px); filter: blur(6px); }
+}
+
+/* Five rows are always reserved, so the wordmark never moves while the lines fill in. */
+.intro-feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: calc(5 * 1.9em);
+  font-family: var(--font-mono);
+  font-size: clamp(0.6rem, 2.9vw, 0.82rem);
+  line-height: 1.9;
+  color: var(--muted);
+}
+.intro-feed li {
+  white-space: nowrap;
+  animation: intro-line-in 0.22s ease;
+}
+.intro-feed li:nth-child(1) { opacity: 1; }
+.intro-feed li:nth-child(2) { opacity: 0.72; }
+.intro-feed li:nth-child(3) { opacity: 0.5; }
+.intro-feed li:nth-child(4) { opacity: 0.32; }
+.intro-feed li:nth-child(5) { opacity: 0.18; }
+.intro-k { color: var(--blue-bright); }
+@keyframes intro-line-in {
+  from { opacity: 0; transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro { display: none !important; }
+  html.intro-running { overflow: visible; }
 }

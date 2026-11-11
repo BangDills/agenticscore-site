@@ -9,6 +9,7 @@ index.html        page structure and content
 styles.css        design tokens, layout, states
 app.js            section nav and the wallet address check
 motion.js         GSAP reveal and counter layer
+intro.js          entry splash: wordmark plus five rows of random txid lines (decoration only)
 assets/vendor/    GSAP 3.13.0 (gsap + ScrollTrigger), see its README for the licence
 assets/mark.png   logo mark, white on transparent, from the project's own artwork
 assets/favicon.png, assets/apple-touch-icon.png   the same mark on a navy plate
@@ -67,8 +68,10 @@ The visual language was measured from arkm.com (its CSS, its fonts, its keyframe
 then rebuilt for this project, not copied wholesale:
 
 - Canvas `#0a0d16`, the reference's body background: near-black navy, not pure black.
-- One accent. `#2563eb` fills buttons (`#ffffff` on it is 4.78:1), `#6da3ff` carries links
-  and figures (7.7:1 on the canvas). `#2563eb` never holds small text, it is only 3.75:1.
+- One accent. `#3263af`, sampled from the reference's "Sign up for free" button, fills buttons
+  (`#ffffff` on it is 5.93:1), `#6da3ff` carries links and figures (7.7:1 on the canvas).
+  `#3263af` never holds small text, it is only 3.27:1 on the canvas. The hover fill
+  `#2c579a` was chosen here, not sampled.
 - Type: Archivo at weight 200 for the large headlines with -0.038em tracking, the
   reference's thin-display gesture. IBM Plex Mono for addresses, figures, step numbers
   and field labels, the same mono the reference uses.
