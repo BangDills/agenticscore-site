@@ -44,6 +44,10 @@ The page is honest about its own state, and it should stay that way:
 - `skill.md` has a Launch settings block (STATUS, CONTRACT_ADDRESS, VERIFY_ENDPOINT,
   MINT_FUNCTION). It ships as NOT OPEN. At launch, fill those four values and set STATUS to OPEN.
   The skill tells the agent to trust that block and nothing else.
+- The supply panel in the hero reads zero because nothing is minted and minting is not open.
+  Point `window.AGENTICSCORE_SUPPLY` at an endpoint answering `{"minted": n, "max": 3000}` to
+  make it live; until then it keeps saying what is true, and it never shows a number that
+  nobody can verify.
 - The wallet check validates EVM address format in the browser. The allowlist
   lookup needs the verification backend; set `window.AGENTICSCORE_API` to the
   endpoint URL to turn that path on, and the loading, success, and error states

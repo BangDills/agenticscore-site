@@ -261,6 +261,72 @@
     });
   });
 
+  /* ---------- Mint supply ---------- */
+
+  /* The supply panel is live only once there is something to read. Point
+     window.AGENTICSCORE_SUPPLY at an endpoint that answers {"minted": <number>, "max":
+     <number>} and the counter, the bar and the status line come from it, refreshed every
+     30 seconds while the tab is visible. Without that endpoint the panel states the truth
+     for an unopened mint: zero, because nothing has been minted. */
+
+  var SUPPLY_CAP = 3000;
+  var supplySource = window.AGENTICSCORE_SUPPLY;
+  var supplyCount = document.getElementById("supply-minted");
+  var supplyFill = document.getElementById("supply-fill");
+  var supplyTrack = document.getElementById("supply-track");
+  var supplyStatus = document.getElementById("supply-status");
+  var supplyState = document.getElementById("supply-state");
+
+  function renderSupply(minted, cap, live) {
+    if (!supplyCount) return;
+    var total = cap > 0 ? cap : SUPPLY_CAP;
+    var count = minted > 0 ? minted : 0;
+    var share = Math.min(100, (count / total) * 100);
+    supplyCount.textContent = count.toLocaleString("en-US");
+    if (supplyFill) supplyFill.style.width = share.toFixed(2) + "%";
+    if (supplyTrack) {
+      supplyTrack.setAttribute("aria-valuenow", String(count));
+      supplyTrack.setAttribute("aria-valuemax", String(total));
+    }
+    if (supplyStatus) {
+      supplyStatus.textContent = live ? "Live" : "Not open";
+      supplyStatus.setAttribute("data-live", live ? "true" : "false");
+    }
+    if (supplyState) {
+      supplyState.textContent = live
+        ? "Read from the contract, refreshed every 30 seconds. The 3,000 cap is enforced on chain."
+        : "Minting has not opened, so nothing is minted. Once it does, this counter reads the contract.";
+    }
+  }
+
+  function readSupply() {
+    if (!supplySource || !window.fetch) return;
+    if (document.visibilityState === "hidden") return;
+    window
+      .fetch(supplySource, { headers: { accept: "application/json" } })
+      .then(function (response) {
+        return response.ok ? response.json() : null;
+      })
+      .then(function (data) {
+        if (!data) return;
+        var minted = Number(data.minted);
+        if (!isFinite(minted) || minted < 0) return;
+        renderSupply(Math.floor(minted), Number(data.max), true);
+      })
+      .catch(function () {
+        /* Keep the stated zero state rather than showing a number nobody can verify. */
+      });
+  }
+
+  if (supplyCount) {
+    renderSupply(0, SUPPLY_CAP, false);
+    if (supplySource) {
+      readSupply();
+      window.setInterval(readSupply, 30000);
+      document.addEventListener("visibilitychange", readSupply);
+    }
+  }
+
   /* ---------- Agent prompt panel height ---------- */
 
   /* Hold the prompt panel to the height of the skill panel above it, so the pair reads as

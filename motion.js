@@ -2,8 +2,8 @@
    third-party script and the CSP can stay at script-src 'self'.
 
    What moves, and why:
-   - hero: headline, lede, actions and the stat strip rise in, then the gauge panel, then
-     the needle sweeps to its reading. It shows what the product is in one gesture.
+   - hero: headline, lede, actions and the stat strip rise in, then the supply panel. It
+     shows what the product is in one gesture.
    - sections: heads, lists and panels fade up once, on first entry, so the page reads in
      the order it was written. Nothing loops, nothing is pinned, nothing scrubs.
    - supply: the cap counts up once when it enters the viewport, because that number is
@@ -32,12 +32,7 @@
 
     timeline
       .from(".hero-copy > *", { y: 20, opacity: 0, stagger: 0.08 })
-      .from(".meter-panel", { y: 16, opacity: 0, duration: 0.8 }, "-=0.55")
-      .from(
-        ".needle-group",
-        { rotation: -30, svgOrigin: "200 200", duration: 1.2, ease: "power2.out" },
-        "-=0.5"
-      );
+      .from(".meter-panel", { y: 16, opacity: 0, duration: 0.8 }, "-=0.55");
 
     if (!ScrollTrigger) return;
 

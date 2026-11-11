@@ -13,8 +13,9 @@
    - radii 4/6/10px and no pills: shape carries hierarchy, controls stay rectangular.
    - IBM Plex Mono for addresses, figures, step numbers and field labels, the same
      mono the reference uses, so measured data reads as machine output.
-   - the needle has no CSS animation: GSAP sweeps it, and its SVG position is already
-     the settled state, so a browser without JS shows a still, correct meter. */
+   - the supply bar has no CSS animation either: it is at 0% until a real reading arrives,
+     and the width transition only runs when that happens, so a browser without JS shows
+     the honest zero state. */
 
 :root {
   --bg: #0a0d16;
@@ -286,7 +287,7 @@ button:disabled, input:disabled { cursor: not-allowed; }
   color: var(--text);
 }
 
-/* Meter panel: the product is a score, so the gauge is the hero visual. */
+/* Meter panel: the mint is capped, so the hero visual is the live supply readout. */
 
 .meter-panel {
   position: relative;
@@ -309,24 +310,50 @@ button:disabled, input:disabled { cursor: not-allowed; }
   font-size: 0.78rem;
   color: var(--muted);
 }
-.gauge { display: block; width: 100%; height: auto; margin: 4px 0 0; }
-.gauge-arc { fill: none; stroke: rgba(235, 240, 246, 0.14); stroke-width: 1.5; }
-.gauge-ticks line { stroke: rgba(235, 240, 246, 0.2); stroke-width: 1.5; }
-.gauge-ticks .tick-major { stroke: rgba(235, 240, 246, 0.38); stroke-width: 2; }
-.needle {
-  stroke: var(--blue-bright);
-  stroke-width: 3;
-  stroke-linecap: round;
-  filter: drop-shadow(0 0 7px rgba(109, 163, 255, 0.5));
-}
-.needle-hub { fill: var(--blue-bright); }
-.gauge-ends {
+.supply-head {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
-  margin-top: -14px;
+  gap: 12px;
+}
+.supply-status {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--muted-2);
+}
+.supply-status[data-live="true"] { color: var(--blue-bright); }
+.supply-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 20px 0 0;
+}
+.supply-count {
+  font-family: var(--font-mono);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.supply-unit {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted-2);
+}
+.supply-track {
+  height: 6px;
+  margin-top: 18px;
+  background: rgba(235, 240, 246, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.supply-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--blue-bright);
+  border-radius: inherit;
+  transition: width 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .meter-panel .caption { margin-top: 20px; }
 
@@ -468,6 +495,12 @@ button:disabled, input:disabled { cursor: not-allowed; }
   font-size: 0.82rem;
   color: var(--blue-bright);
   padding-top: 2px;
+}
+/* The steps and the contract bar belong to the agent section, so they sit under both of
+   its columns instead of starting a section of their own. */
+.mint-flow {
+  grid-column: 1 / -1;
+  min-width: 0;
 }
 
 /* Wallet check: the only live control on the page. */
@@ -956,6 +989,7 @@ a.skill-url:hover { text-decoration: underline; text-underline-offset: 3px; }
   html { scroll-behavior: auto; }
   .glint::after { display: none; }
   .deck-ready .spec-table > div { transition: none; }
+  .supply-fill { transition: none; }
   .nav-toggle-bars span { transition: none; }
   .qa-list summary { transition: none; }
   .qa-mark span:last-child { transition: none; }
