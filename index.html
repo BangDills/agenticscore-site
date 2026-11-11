@@ -30,9 +30,9 @@
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Page sections">
       <ul>
-        <li><a href="#scoring">Scoring</a></li>
         <li><a href="#agent">Mint</a></li>
         <li><a href="#leaderboard">Leaderboard</a></li>
+        <li><a href="#scoring">Scoring</a></li>
         <li><a href="#questions">FAQ</a></li>
       </ul>
       <a class="btn btn-primary" href="#eligibility">Check your wallet</a>
@@ -61,84 +61,6 @@
       </dl>
     </div>
   </section>
-
-  <section class="section" id="overview">
-    <div class="wrap split">
-      <div class="split-head" data-reveal>
-        <h2>What AgenticScore is</h2>
-        <p>A reputation layer for Binance Agentic Wallets. Wallet activity is measured and turned into a score that ranks you on the leaderboard. Joining takes one non-transferable NFT, identical for every wallet. During the MVP, only wallets on the project allowlist can take part.</p>
-      </div>
-      <div class="spec-deck" data-reveal>
-        <dl class="spec-table">
-          <div><dt>Collection</dt><dd>AgenticScore NFT, soulbound ERC-721</dd></div>
-          <div><dt>Eligibility</dt><dd>Verified Binance Agentic Wallet holders</dd></div>
-          <div><dt>Score</dt><dd>Open-ended, with no maximum</dd></div>
-          <div><dt>Reward pool</dt><dd>1,000 USDT every week, shared by the top 100 wallets</dd></div>
-          <div><dt>Verification</dt><dd>Wallet address and a signature you approve</dd></div>
-          <div><dt>Minting fee</dt><dd>Free, gas only (about 0.00008 BNB)</dd></div>
-        </dl>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-supply" id="supply">
-    <div class="wrap supply-grid">
-      <div class="supply-number" data-reveal>
-        <p class="supply-value" data-count="3000">3,000</p>
-        <p class="supply-label">maximum supply, enforced by the contract</p>
-      </div>
-      <div class="supply-body" data-reveal data-stagger>
-        <h2>Capped, and non-transferable</h2>
-        <ul class="rule-list">
-          <li>No unlimited minting. When 3,000 NFTs exist, minting ends.</li>
-          <li>Only verified Binance Agentic Wallets on the allowlist can mint.</li>
-          <li>Soulbound: the token stays in the wallet that minted it. There is nothing to sell and no way to move a reputation to someone else.</li>
-          <li>Every NFT is identical. Your score lives on the leaderboard, not in the token.</li>
-        </ul>
-        <p class="caption">Minted so far: none. Minting has not opened.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="scoring">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <h2>What counts toward your score</h2>
-        <p>Your score comes from verified activity in your wallet. Each kind of activity earns points, but every extra repeat of the same kind adds a little less than the last. Spam barely helps, real activity still moves you up, and there is no maximum score.</p>
-      </div>
-      <dl class="factor-list" data-reveal data-stagger>
-        <div>
-          <dt>Token swaps</dt>
-          <dd>Weighted highest.</dd>
-        </div>
-        <div>
-          <dt>NFT mints</dt>
-          <dd>Weighted in the middle, with diminishing returns.</dd>
-        </div>
-        <div>
-          <dt>Transfers</dt>
-          <dd>Weighted lowest, because they are cheap to repeat.</dd>
-        </div>
-        <div>
-          <dt>Active days</dt>
-          <dd>Rewards steady use over short bursts.</dd>
-        </div>
-      </dl>
-
-      <div class="scoring-foot">
-        <div class="honesty-block" data-reveal>
-          <h3>How scores stay honest</h3>
-          <ul class="rule-list">
-            <li>Each transaction counts once.</li>
-            <li>Transfers between your own wallets are ignored.</li>
-            <li>Dust-value swaps and transfers are ignored.</li>
-            <li>Only activity inside the current 7-day window counts.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="section" id="mint-supply">
     <div class="wrap">
       <div class="section-head" data-reveal>
@@ -161,7 +83,6 @@
       </figure>
     </div>
   </section>
-
   <section class="section" id="eligibility">
     <div class="wrap">
       <div class="section-head" data-reveal>
@@ -186,7 +107,6 @@
       </div>
     </div>
   </section>
-
   <section class="section" id="agent">
     <div class="wrap split">
       <div class="split-head" data-reveal>
@@ -257,7 +177,6 @@ Rules:
       </div>
     </div>
   </section>
-
   <section class="section section-supply" id="leaderboard">
     <div class="wrap split">
       <div class="split-head" data-reveal>
@@ -301,7 +220,80 @@ Rules:
       </div>
     </div>
   </section>
+  <section class="section" id="overview">
+    <div class="wrap split">
+      <div class="split-head" data-reveal>
+        <h2>What AgenticScore is</h2>
+        <p>A reputation layer for Binance Agentic Wallets. Wallet activity is measured and turned into a score that ranks you on the leaderboard. Joining takes one non-transferable NFT, identical for every wallet. During the MVP, only wallets on the project allowlist can take part.</p>
+      </div>
+      <div class="spec-deck" data-reveal>
+        <dl class="spec-table">
+          <div><dt>Collection</dt><dd>AgenticScore NFT, soulbound ERC-721</dd></div>
+          <div><dt>Eligibility</dt><dd>Verified Binance Agentic Wallet holders</dd></div>
+          <div><dt>Score</dt><dd>Open-ended, with no maximum</dd></div>
+          <div><dt>Reward pool</dt><dd>1,000 USDT every week, shared by the top 100 wallets</dd></div>
+          <div><dt>Verification</dt><dd>Wallet address and a signature you approve</dd></div>
+          <div><dt>Minting fee</dt><dd>Free, gas only (about 0.00008 BNB)</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+  <section class="section section-supply" id="supply">
+    <div class="wrap supply-grid">
+      <div class="supply-number" data-reveal>
+        <p class="supply-value" data-count="3000">3,000</p>
+        <p class="supply-label">maximum supply, enforced by the contract</p>
+      </div>
+      <div class="supply-body" data-reveal data-stagger>
+        <h2>Capped, and non-transferable</h2>
+        <ul class="rule-list">
+          <li>No unlimited minting. When 3,000 NFTs exist, minting ends.</li>
+          <li>Only verified Binance Agentic Wallets on the allowlist can mint.</li>
+          <li>Soulbound: the token stays in the wallet that minted it. There is nothing to sell and no way to move a reputation to someone else.</li>
+          <li>Every NFT is identical. Your score lives on the leaderboard, not in the token.</li>
+        </ul>
+        <p class="caption">Minted so far: none. Minting has not opened.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="scoring">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>What counts toward your score</h2>
+        <p>Your score comes from verified activity in your wallet. Each kind of activity earns points, but every extra repeat of the same kind adds a little less than the last. Spam barely helps, real activity still moves you up, and there is no maximum score.</p>
+      </div>
+      <dl class="factor-list" data-reveal data-stagger>
+        <div>
+          <dt>Token swaps</dt>
+          <dd>Weighted highest.</dd>
+        </div>
+        <div>
+          <dt>NFT mints</dt>
+          <dd>Weighted in the middle, with diminishing returns.</dd>
+        </div>
+        <div>
+          <dt>Transfers</dt>
+          <dd>Weighted lowest, because they are cheap to repeat.</dd>
+        </div>
+        <div>
+          <dt>Active days</dt>
+          <dd>Rewards steady use over short bursts.</dd>
+        </div>
+      </dl>
 
+      <div class="scoring-foot">
+        <div class="honesty-block" data-reveal>
+          <h3>How scores stay honest</h3>
+          <ul class="rule-list">
+            <li>Each transaction counts once.</li>
+            <li>Transfers between your own wallets are ignored.</li>
+            <li>Dust-value swaps and transfers are ignored.</li>
+            <li>Only activity inside the current 7-day window counts.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
   <section class="section" id="questions">
     <div class="wrap">
       <div class="section-head" data-reveal>
