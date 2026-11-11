@@ -17,6 +17,8 @@ assets/logos/     X, BscScan and Sourcify marks for the footer row, and the USDT
                   used inline in the weekly reward split (from the MIT-licensed
                   spothq/cryptocurrency-icons set)
 skill.md          agent skill: lets an agent mint with no pasted prompt (served at /skill.md)
+terms.html        Terms of Service (status, keys, the NFT, score and rewards, liability)
+privacy.html      Privacy (what is stored, what third parties see, on chain data)
 SCORING.md        draft scoring spec for the backend (values not published on the page)
 ```
 

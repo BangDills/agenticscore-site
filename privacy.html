@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgenticScore Privacy</title>
+<meta name="description" content="What this site does with your data: nothing beyond serving the page.">
+<meta property="og:title" content="AgenticScore Privacy">
+<meta property="og:description" content="No accounts, no cookies, no analytics. What the site stores, and what third parties see.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0d16">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@200;300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a class="wordmark" href="/#top">
+      <img class="mark" src="assets/mark.png" alt="" width="24" height="24">
+      <span>AgenticScore</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+      <span class="nav-toggle-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Page sections">
+      <ul>
+        <li><a href="/#agent">Mint</a></li>
+        <li><a href="/#leaderboard">Leaderboard</a></li>
+        <li><a href="/#scoring">Scoring</a></li>
+        <li><a href="/#questions">FAQ</a></li>
+      </ul>
+      <a class="btn btn-primary" href="/#eligibility">Check your wallet</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="section">
+    <div class="wrap">
+      <div class="legal">
+        <h1>Privacy</h1>
+        <p class="legal-updated">Last updated 11 November 2026</p>
+        <p class="lede">The short version: this site collects nothing about you. No accounts, no cookies, no analytics, no tracking, and no mailing list.</p>
+
+        <h2>What the site stores in your browser</h2>
+        <p>One value in sessionStorage, named agenticscore-intro-seen. It stops the entry animation from repeating inside the same tab and is cleared when you close that tab. Nothing else is stored, and nothing is read back out.</p>
+
+        <h2>The wallet check</h2>
+        <p>The address you paste is checked for format in your browser. Nothing is sent anywhere while the verification backend is not deployed. When that backend goes live, the address you submit will be sent to it to check the allowlist, and this page will say so before it does.</p>
+
+        <h2>Requests other companies see</h2>
+        <p>Two third parties are involved in serving these pages:</p>
+        <ul>
+          <li>Google Fonts serves the Archivo and IBM Plex Mono webfonts, so Google receives your IP address and user agent.</li>
+          <li>Vercel hosts the site and keeps standard request logs, such as IP address, user agent, time, and path, for security and operations.</li>
+        </ul>
+
+        <h2>On chain</h2>
+        <p>When minting opens, your mint and your score are public on BNB Smart Chain, tied to your wallet address, and permanent. That is how a public blockchain works. The project cannot hide or delete that data.</p>
+
+        <h2>What the project does not do</h2>
+        <ul>
+          <li>No selling or sharing of personal data.</li>
+          <li>No profiling and no advertising.</li>
+          <li>No tracking across other sites.</li>
+          <li>No email list to join.</li>
+        </ul>
+
+        <h2>Your choices</h2>
+        <p>You can block the font requests, and the page falls back to system fonts. You can use a wallet that is not tied to your identity. You can reach the site through a VPN.</p>
+
+        <h2>Changes to this page</h2>
+        <p>This page can change. The date at the top moves when it does.</p>
+
+        <h2>Contact</h2>
+        <p>Not published yet. It will be published before minting opens.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brandline">
+        <img class="footer-mark" src="assets/mark.png" alt="" width="24" height="24">
+        <p class="footer-wordmark">AgenticScore</p>
+      </div>
+      <ul class="footer-logos">
+        <!-- TODO: these point at the platforms themselves. Swap in the project's own
+             profile, contract and verified-source pages once they exist. -->
+        <li class="logo-x"><a href="https://x.com/"><img src="assets/logos/x.png" alt="X" width="22" height="22"></a></li>
+        <li><a href="https://bscscan.com/"><img src="assets/logos/bscscan.png" alt="BscScan" width="26" height="26"></a></li>
+        <li><a href="https://sourcify.dev/"><img src="assets/logos/sourcify.png" alt="Sourcify" width="26" height="26"></a></li>
+      </ul>
+    </div>
+    <div class="footer-links">
+      <a href="/#scoring">Scoring</a>
+      <a href="/#eligibility">Eligibility</a>
+      <a href="/#agent">Mint</a>
+      <a href="/#leaderboard">Leaderboard</a>
+      <a href="/#questions">FAQ</a>
+      <a href="https://github.com/BangDills/agenticscore-site">GitHub</a>
+    </div>
+  </div>
+  <div class="wrap footer-legal">
+    <p>AgenticScore &copy; 2026</p>
+    <p class="footer-legal-links"><a href="terms.html">Terms of Service</a><a href="privacy.html">Privacy</a></p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
