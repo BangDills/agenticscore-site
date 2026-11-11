@@ -13,7 +13,9 @@ intro.js          entry splash: wordmark plus five rows of random txid lines (de
 assets/vendor/    GSAP 3.13.0 (gsap + ScrollTrigger), see its README for the licence
 assets/mark.png   logo mark, white on transparent, from the project's own artwork
 assets/favicon.png, assets/apple-touch-icon.png   the same mark on a navy plate
-assets/logos/     X, BscScan and Sourcify marks for the footer row
+assets/logos/     X, BscScan and Sourcify marks for the footer row, and the USDT mark
+                  used inline in the weekly reward split (from the MIT-licensed
+                  spothq/cryptocurrency-icons set)
 skill.md          agent skill: lets an agent mint with no pasted prompt (served at /skill.md)
 SCORING.md        draft scoring spec for the backend (values not published on the page)
 ```

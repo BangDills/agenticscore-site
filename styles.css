@@ -743,6 +743,15 @@ a.skill-url:hover { text-decoration: underline; text-underline-offset: 3px; }
 }
 .board .caption { margin-top: 14px; }
 .split-title { margin: 36px 0 14px; }
+/* Inline coin mark: sized in em so it scales with whatever text it sits in, nudged onto
+   the baseline. Decorative (alt is empty): the amount beside it already names the token. */
+.coin {
+  display: inline-block;
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 0.34em;
+  vertical-align: -0.16em;
+}
 .section-supply .split-head .rule-list { margin-top: 22px; }
 
 .visually-hidden {
