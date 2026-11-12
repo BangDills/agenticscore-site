@@ -41,20 +41,27 @@ Google Fonts.
 
 | Host | URL | Notes |
 | --- | --- | --- |
-| Vercel | https://agenticscore-nu.vercel.app | primary. Sends the headers in `vercel.json`, and serves `/skill.md` as `text/plain`. |
-| GitHub Pages | https://bangdills.github.io/agenticscore-site/ | mirror, built from `main` at `/`. Serves `/skill.md` as `text/markdown`. GitHub Pages cannot send response headers, so the CSP from `vercel.json` does not apply here. |
-| intended home | https://agenticscore.github.io | not live. A `<owner>.github.io` address needs a GitHub account or organisation literally named `agenticscore`, plus a repo named `agenticscore.github.io` under it. Until that exists this URL answers 404, and the skill address printed on the site points at nothing. |
+| GitHub Pages (org site) | https://agenticscore.github.io | the home, and the address printed on the site. Repo `agenticscore/agenticscore.github.io`, branch `main` at `/`. Serves `/skill.md` as `text/markdown`. |
+| Vercel | https://agenticscore-nu.vercel.app | mirror. Sends the headers in `vercel.json`, and serves `/skill.md` as `text/plain`. |
+| GitHub Pages (project site) | https://bangdills.github.io/agenticscore-site/ | mirror, built from the source repo `BangDills/agenticscore-site`. |
 
-`.nojekyll` is required for the Pages mirror: without it Jekyll runs on the branch and
-renders `skill.md` into HTML instead of serving it as text, and that file is exactly what an
-agent fetches.
+`agenticscore.github.io` needs a GitHub account or organisation named `agenticscore`; a
+`*.github.io` address cannot be claimed as a custom domain on any other repo (GitHub rejects
+it with "Invalid cname"). The org exists, and its `<org>.github.io` repo is the user site, so
+Pages serves it at the root.
 
-Both copies come from this working tree. When the `agenticscore` organisation exists, add it
-as a second remote and push the same commit:
+GitHub Pages cannot send response headers, so the CSP from `vercel.json` does not apply to
+either Pages copy. The pages still work there: no inline script, every asset same-origin.
+
+`.nojekyll` is required on both Pages copies. Without it Jekyll runs on the branch and renders
+`skill.md` into HTML instead of serving it as text, and that file is exactly what an agent
+fetches.
+
+Shipping a change means one push plus one deploy. `origin` carries two push URLs, so a single
+`git push` updates both repos, and Vercel is deployed by hand:
 
 ```bash
-git remote add pages https://github.com/agenticscore/agenticscore.github.io.git
-git push pages main
+cd /root/agenticscore-site && git add -A && git commit -m "..." && git push && vercel --prod
 ```
 
 ## What is live and what is not
