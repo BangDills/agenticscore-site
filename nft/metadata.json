@@ -1,0 +1,28 @@
+{
+  "name": "AgenticScore",
+  "description": "A soulbound reputation NFT for Binance Agentic Wallets. One per wallet, 3,000 in total, and it cannot be transferred or sold. The wallet's activity score lives on the leaderboard, not in this token. Minting is free: the holder pays network gas only.",
+  "image": "https://agenticscore.github.io/nft/agenticscore.jpg",
+  "external_url": "https://agenticscore.github.io",
+  "attributes": [
+    {
+      "trait_type": "Chain",
+      "value": "BNB Smart Chain"
+    },
+    {
+      "trait_type": "Supply",
+      "value": "3000"
+    },
+    {
+      "trait_type": "Transferable",
+      "value": "No"
+    },
+    {
+      "trait_type": "Standard",
+      "value": "ERC-721, ERC-5192 soulbound"
+    },
+    {
+      "trait_type": "Mint price",
+      "value": "Free, gas only"
+    }
+  ]
+}
