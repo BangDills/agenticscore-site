@@ -80,10 +80,10 @@ The page is honest about its own state, and it should stay that way:
   Point `window.AGENTICSCORE_SUPPLY` at an endpoint answering `{"minted": n, "max": 3000}` to
   make it live; until then it keeps saying what is true, and it never shows a number that
   nobody can verify.
-- The wallet check validates EVM address format in the browser. The allowlist
-  lookup needs the verification backend; set `window.AGENTICSCORE_API` to the
-  endpoint URL to turn that path on, and the loading, success, and error states
-  start working against real data.
+- The site has no wallet checker. Eligibility and the starting score are decided by
+  the verification backend when the agent mints, so the page never shows a wallet its
+  score before minting. `window.AGENTICSCORE_API` and the checker were removed with the
+  section; the git history has them if that call is ever reversed.
 - The leaderboard is an empty table on purpose. Scores are open-ended, the top 100
   share a 1,000 USDT pool every week, paid from a separate wallet at the end of each
   7-day snapshot. The rank-band split is published; the first snapshot date and the minimum score to qualify are not. No contract is configured

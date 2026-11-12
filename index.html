@@ -42,7 +42,7 @@
         <li><a href="#scoring">Scoring</a></li>
         <li><a href="#questions">FAQ</a></li>
       </ul>
-      <a class="btn btn-primary" href="#eligibility">Check your wallet</a>
+      <a class="btn btn-primary" href="#agent">Mint with your own agent</a>
     </nav>
   </div>
 </header>
@@ -55,7 +55,7 @@
         <h1>A reputation score for your Agentic Wallets</h1>
         <p class="lede">Mint one soulbound NFT through your own agent to join the leaderboard. Wallets are ranked by what they actually do, and every week the top 100 share a 1,000 USDT reward pool. Only 3,000 NFTs will ever exist, and none can be transferred.</p>
         <div class="hero-actions">
-          <a class="btn btn-primary" href="#eligibility">Check your wallet</a>
+          <a class="btn btn-primary" href="#agent">Mint with your own agent</a>
           <a class="btn btn-ghost" href="#scoring">How the score works</a>
         </div>
       </div>
@@ -88,30 +88,6 @@
         </div>
         <p class="caption" id="supply-state">Minting has not opened, so nothing is minted. Once it does, this counter reads the contract.</p>
       </figure>
-    </div>
-  </section>
-  <section class="section" id="eligibility">
-    <div class="wrap">
-      <div class="section-head" data-reveal>
-        <h2>Check your wallet</h2>
-        <p>During the MVP, an operator-managed allowlist decides who can mint. Paste your address to confirm its format. The allowlist lookup starts working once the backend is deployed.</p>
-      </div>
-
-      <div class="eligibility-grid">
-        <div class="checker" id="wallet-check" data-reveal>
-          <form class="checker-form" novalidate>
-            <label for="wallet-address">Binance Agentic Wallet address</label>
-            <div class="field-row">
-              <input id="wallet-address" name="wallet" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="0x0000000000000000000000000000000000000000" aria-describedby="wallet-hint">
-              <button class="btn btn-primary" type="submit">Check address</button>
-            </div>
-            <p class="hint" id="wallet-hint">The format is checked in your browser. Nothing is sent anywhere until the backend is live.</p>
-          </form>
-          <div class="checker-result" role="status" aria-live="polite">
-            <p class="result-empty">No address checked yet.</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
   <section class="section" id="agent">
@@ -401,7 +377,6 @@ Rules:
     </div>
     <div class="footer-links">
       <a href="#scoring">Scoring</a>
-      <a href="#eligibility">Eligibility</a>
       <a href="#agent">Mint</a>
       <a href="#leaderboard">Leaderboard</a>
       <a href="#questions">FAQ</a>
