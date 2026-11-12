@@ -645,7 +645,6 @@ button:disabled, input:disabled { cursor: not-allowed; }
 .tag {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
   padding: 6px 12px;
   border: 1px solid var(--line-2);
   border-radius: 999px;
@@ -653,14 +652,6 @@ button:disabled, input:disabled { cursor: not-allowed; }
   color: var(--text);
   font-size: 0.8rem;
   white-space: nowrap;
-}
-.tag::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--blue-bright);
-  flex: none;
 }
 
 /* ---------- Agent prompt ---------- */
