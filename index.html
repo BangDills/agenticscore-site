@@ -151,9 +151,9 @@ Then:
 4. Show me the verification message and sign it. Sign plain text only. If you are asked to sign a transaction, a token approval, or a permit, stop and tell me.
 5. Show me the gas estimate and wait for my approval before you send the transaction. Minting is free, gas only: the expected gas is about 0.00008 BNB. If the estimate is much higher, or anything asks me to pay for something other than gas, stop and tell me why.
 6. Mint exactly one AgenticScore NFT from the published contract. If it fails, report the error and do not retry on your own.
-7. When the transaction is confirmed, read my score from the mint result and tell me. The score comes with the mint itself, so do not send me to a website to look it up. If the mint result has no score, say so instead of guessing or calculating one yourself.
+7. When the transaction is confirmed, read my starting score from the mint result and tell me. It is my score at mint time, and it grows with new activity during the batch. The score comes with the mint itself, so do not send me to a website to look it up. If the mint result has no score, say so instead of guessing or calculating one yourself.
 
-Finish with a short summary: transaction hash, token ID, and score.
+Finish with a short summary: transaction hash, token ID, and starting score.
 
 Rules:
 - Never ask for or reveal private keys, seed phrases, or passwords.
@@ -170,15 +170,66 @@ Rules:
           <li><span class="step-num">2</span><span>The agent reads the official contract address and checks your wallet against the allowlist.</span></li>
           <li><span class="step-num">3</span><span>The agent signs the verification message, shows you the gas estimate (about 0.00008 BNB, gas only), and waits for your approval.</span></li>
           <li><span class="step-num">4</span><span>The agent mints your soulbound NFT. It arrives in your wallet.</span></li>
-          <li><span class="step-num">5</span><span>The agent reports your score. Your wallet joins the leaderboard.</span></li>
+          <li><span class="step-num">5</span><span>The agent reports your starting score. Your wallet joins the leaderboard, and new activity in the batch adds to it.</span></li>
         </ol>
-        <div class="mint-bar" data-reveal>
-          <div class="mint-contract">
-            <span class="mono-label">Contract address</span>
-            <span class="mono-value">Not deployed</span>
+        <div class="tag-strip" data-reveal>
+          <div class="tag-strip-head">
+            <h3>Address tags</h3>
+            <p>Tags describe what a wallet does. These are illustrative, not live data.</p>
           </div>
-          <div class="mint-actions">
-            <a class="btn btn-ghost" href="#eligibility">Check your wallet</a>
+          <div class="tag-rows" role="group" aria-label="Illustrative address tags">
+            <div class="tag-row">
+            <ul class="tag-track">
+              <li class="tag">Agentic Wallet</li>
+              <li class="tag">Soulbound holder</li>
+              <li class="tag">Allowlisted</li>
+              <li class="tag">Top 100</li>
+              <li class="tag">Swap heavy</li>
+              <li class="tag">NFT minter</li>
+              <li class="tag">7 of 7 active days</li>
+              <li class="tag">Early minter</li>
+              <li class="tag">Free mint, gas only</li>
+              <li class="tag">Verified signer</li>
+            </ul>
+            <ul class="tag-track" aria-hidden="true">
+              <li class="tag">Agentic Wallet</li>
+              <li class="tag">Soulbound holder</li>
+              <li class="tag">Allowlisted</li>
+              <li class="tag">Top 100</li>
+              <li class="tag">Swap heavy</li>
+              <li class="tag">NFT minter</li>
+              <li class="tag">7 of 7 active days</li>
+              <li class="tag">Early minter</li>
+              <li class="tag">Free mint, gas only</li>
+              <li class="tag">Verified signer</li>
+            </ul>
+            </div>
+            <div class="tag-row tag-row-reverse">
+            <ul class="tag-track">
+              <li class="tag">Consistent</li>
+              <li class="tag">Diverse activity</li>
+              <li class="tag">Score leader</li>
+              <li class="tag">Weekly reward</li>
+              <li class="tag">Agent-operated</li>
+              <li class="tag">One NFT per wallet</li>
+              <li class="tag">Rank 1</li>
+              <li class="tag">High transacting</li>
+              <li class="tag">BNB Chain</li>
+              <li class="tag">Steady transfers</li>
+            </ul>
+            <ul class="tag-track" aria-hidden="true">
+              <li class="tag">Consistent</li>
+              <li class="tag">Diverse activity</li>
+              <li class="tag">Score leader</li>
+              <li class="tag">Weekly reward</li>
+              <li class="tag">Agent-operated</li>
+              <li class="tag">One NFT per wallet</li>
+              <li class="tag">Rank 1</li>
+              <li class="tag">High transacting</li>
+              <li class="tag">BNB Chain</li>
+              <li class="tag">Steady transfers</li>
+            </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -267,7 +318,7 @@ Rules:
     <div class="wrap">
       <div class="section-head" data-reveal>
         <h2>What counts toward your score</h2>
-        <p>Your score comes from verified activity in your wallet. Each kind of activity earns points, but every extra repeat of the same kind adds a little less than the last. Spam barely helps, real activity still moves you up, and there is no maximum score.</p>
+        <p>Your score comes from verified activity in your wallet. It is calculated the moment you mint, and that is your starting score. New activity during the 7-day batch then adds to it, and the batch ends with a snapshot that ranks every wallet. Each kind of activity earns points, but every extra repeat of the same kind adds a little less than the last, so spam barely helps. There is no maximum score.</p>
       </div>
       <dl class="factor-list" data-reveal data-stagger>
         <div>
@@ -295,7 +346,7 @@ Rules:
             <li>Each transaction counts once.</li>
             <li>Transfers between your own wallets are ignored.</li>
             <li>Dust-value swaps and transfers are ignored.</li>
-            <li>Only activity inside the current 7-day window counts.</li>
+            <li>Activity counts toward your score until the batch snapshot is taken.</li>
           </ul>
         </div>
       </div>
@@ -321,7 +372,7 @@ Rules:
         </details>
         <details>
           <summary><span class="qa-q">How is my score calculated?</span><span class="qa-mark" aria-hidden="true"><span></span><span></span></span></summary>
-          <p>From your wallet's swaps, NFT mints, transfers, and active days. Each type earns points with diminishing returns, so repeating one action adds less each time. There is no maximum score, and only the current 7-day window counts. Exact point values are not published.</p>
+          <p>Your score is calculated when you mint, from your wallet's swaps, NFT mints, transfers, and active days. That is your starting score. New activity during the 7-day batch adds to it. Each type earns points with diminishing returns, so repeating one action adds less each time. There is no maximum score. Exact point values are not published.</p>
         </details>
         <details>
           <summary><span class="qa-q">Who gets the USDT reward?</span><span class="qa-mark" aria-hidden="true"><span></span><span></span></span></summary>

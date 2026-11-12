@@ -21,13 +21,20 @@ Rank by the unrounded score. Display it rounded to a whole number.
 | Transfer | 10 |
 | Active day | 30 |
 
-Worked example: 100 mints, 20 swaps, 50 transfers, 7 active days (the most a 7-day window allows).
+Counts are cumulative from the start of the scope (to be decided, see open decisions) up to now,
+so the score at mint is the starting score and it rises as the counts rise during the batch.
+
+Worked example. At mint: 100 mints, 20 swaps, 50 transfers, 7 active days.
 
 - Mints: 25 x ln(101) = 115.4
 - Swaps: 40 x ln(21) = 121.8
 - Transfers: 10 x ln(51) = 39.3
 - Active days: 30 x ln(8) = 62.4
-- Score: 338.9, displayed as 338
+- Starting score: 338.9, displayed as 338
+
+Later in the batch the same wallet adds 10 swaps, 20 transfers, and 2 active days
+(30 swaps, 70 transfers, 9 active days): the score becomes 364.4, displayed as 364.
+The 10 extra swaps add less than the first 10 did, because of the log.
 
 Effect of the log: going from 50 to 5,000 transfers (100x the work) adds only
 46 points. Doubling the number of different things a wallet does is worth far more
@@ -38,14 +45,14 @@ than repeating one cheap action.
 - Each transaction hash counts once.
 - Transfers between the user's own wallets are ignored.
 - Swaps and transfers below a minimum value are ignored (threshold to be decided).
-- Snapshot: every 7 days. Only activity inside the current window counts (first start date to be decided).
+- Timeline: the score is calculated at the moment of mint (the starting score). New activity during the batch adds to it. The batch is 7 days and ends with a snapshot, which ranks the wallets and triggers the reward. The first batch start date is to be decided.
 - Only wallets that hold an AgenticScore NFT are ranked. One NFT per wallet.
 - Tie-break: earliest mint of the AgenticScore NFT. Ties should be rare because ranking uses the unrounded score.
 
 ## Rewards
 
 - Pool: 1,000 USDT per weekly snapshot for the top 100 wallets, distributed at the end of each snapshot from a separate wallet. No reward logic lives in the NFT contract.
-- The snapshot repeats every 7 days. Each cycle counts only activity inside its own 7-day window, so scores start fresh every cycle.
+- The snapshot repeats every 7 days. What happens to scores when the next batch starts (restart from a fresh starting score, or carry over) is not decided.
 - Split of the 1,000 USDT weekly pool (rank bands, published on the site):
 
 | Rank | Wallets | USDT each | Band total | Share of pool |
@@ -71,10 +78,14 @@ mint result, so it never has to open the website to find it. If the mint result 
 the prompt tells the agent to say so instead of guessing or calculating one.
 
 Suggested build: after the agent signs the verification message, the backend verifies the
-signature, computes the wallet's score for the current window, and returns it together with a
+signature, computes the wallet's starting score at that moment, and returns it together with a
 backend-signed voucher (score, wallet, expiry). The agent passes the voucher to the mint call, the
 contract checks the backend signature, and the mint event includes the score. The agent then reads
 the score from the receipt.
+
+The reference contract (agenticscore-contracts) implements exactly this: `mint(uint256 score,
+uint256 deadline, bytes signature)`, an EIP-712 voucher `Mint(address wallet, uint256 score, uint256
+deadline)`, and a `Minted(wallet, tokenId, score)` event.
 
 ## Known limit
 
@@ -85,8 +96,10 @@ The allowlist and the one-NFT-per-wallet rule are what limit that.
 
 - Final weights.
 - Dust thresholds for swaps and transfers.
-- First snapshot start date, and whether a wallet that mints mid-cycle is scored for that cycle.
-- Active days max out at 7 in a 7-day window, so re-check the active-day weight.
+- What the starting score counts: all of the wallet's history, or a fixed lookback (for example the last 30 days). A fixed lookback keeps week one from being decided only by old wallets' lifetime history.
+- What happens to scores when the next batch starts: restart from a fresh starting score, or carry over. Carrying over lets the same wallets stay on top every week.
+- First batch start date.
+- Active days: once the scope above is decided, re-check the weight. With a lookback, the count can exceed 7.
 - The minimum score to qualify for a reward, and what happens to unpaid amounts.
 - Whether the AgenticScore mint itself earns points (suggested: no).
 - Which data source the backend reads to classify swaps, mints, and transfers.
