@@ -71,7 +71,9 @@ The page is honest about its own state, and it should stay that way:
 - The contract is deployed at `0xdb4aDa50DBa6445Fd56F1d3ea3309bb5519b40A8` with minting closed, so
   there is no mint button yet. Minting happens through an agent, using
   `skill.md` or the pasted prompt. Both tell the agent to stop unless minting is open.
-- Minting is shown as free, always with "gas only" next to it (about 0.00008 BNB). Gas varies a
+- Minting is shown as free, always with "gas only" next to it (about 0.000005 BNB: 85,000 to 105,000
+  gas at BSC's 0.05 gwei, measured on the deployed contract). That gas goes to the network's
+  validators, not to the project. Gas varies a
   little with the network. If a fixed fee is ever charged by the contract, it is no longer
   "gas only" and every mention has to change.
 - `skill.md` has a Launch settings block (STATUS, CONTRACT_ADDRESS, VERIFY_ENDPOINT,

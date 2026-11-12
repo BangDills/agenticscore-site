@@ -125,7 +125,7 @@ Before you do anything:
 
 Then:
 4. Show me the verification message and sign it. Sign plain text only. If you are asked to sign a transaction, a token approval, or a permit, stop and tell me.
-5. Show me the gas estimate and wait for my approval before you send the transaction. Minting is free, gas only: the expected gas is about 0.00008 BNB. If the estimate is much higher, or anything asks me to pay for something other than gas, stop and tell me why.
+5. Show me the gas estimate and wait for my approval before you send the transaction. Minting is free, gas only: the expected gas is about 0.000005 BNB, which goes to the network's validators and not to this project. If the estimate is more than ten times that, or anything asks me to pay for something other than gas, stop and tell me why.
 6. Mint exactly one AgenticScore NFT from the published contract. If it fails, report the error and do not retry on your own.
 7. When the transaction is confirmed, read my starting score from the mint result and tell me. It is my score at mint time, and it grows with new activity during the batch. The score comes with the mint itself, so do not send me to a website to look it up. If the mint result has no score, say so instead of guessing or calculating one yourself.
 
@@ -144,7 +144,7 @@ Rules:
         <ol class="mint-steps" data-reveal data-stagger>
           <li><span class="step-num">1</span><span>Give the agent that controls your Binance Agentic Wallet the AgenticScore skill, or paste the prompt above.</span></li>
           <li><span class="step-num">2</span><span>The agent reads the official contract address and checks your wallet against the allowlist.</span></li>
-          <li><span class="step-num">3</span><span>The agent signs the verification message, shows you the gas estimate (about 0.00008 BNB, gas only), and waits for your approval.</span></li>
+          <li><span class="step-num">3</span><span>The agent signs the verification message, shows you the gas estimate (about 0.000005 BNB, gas only), and waits for your approval.</span></li>
           <li><span class="step-num">4</span><span>The agent mints your soulbound NFT. It arrives in your wallet.</span></li>
           <li><span class="step-num">5</span><span>The agent reports your starting score. Your wallet joins the leaderboard, and new activity in the batch adds to it.</span></li>
         </ol>
@@ -267,7 +267,7 @@ Rules:
           <div><dt>Score</dt><dd>Open-ended, with no maximum</dd></div>
           <div><dt>Reward pool</dt><dd>1,000 USDT every week, shared by the top 100 wallets</dd></div>
           <div><dt>Verification</dt><dd>Wallet address and a signature you approve</dd></div>
-          <div><dt>Minting fee</dt><dd>Free, gas only (about 0.00008 BNB)</dd></div>
+          <div><dt>Minting fee</dt><dd>Free, gas only (about 0.000005 BNB)</dd></div>
         </dl>
       </div>
     </div>
@@ -344,7 +344,7 @@ Rules:
         </details>
         <details>
           <summary><span class="qa-q">What does minting cost?</span><span class="qa-mark" aria-hidden="true"><span></span><span></span></span></summary>
-          <p>Free, gas only. The project charges no mint fee. You pay only the network gas for your own transaction on BNB Smart Chain, about 0.00008 BNB. Gas can vary slightly with network conditions.</p>
+          <p>Free, gas only. The project charges no mint fee. You pay only the network gas for your own transaction on BNB Smart Chain, about 0.000005 BNB, and that gas goes to the network's validators, not to this project. Gas can vary with network conditions.</p>
         </details>
         <details>
           <summary><span class="qa-q">How is my score calculated?</span><span class="qa-mark" aria-hidden="true"><span></span><span></span></span></summary>
