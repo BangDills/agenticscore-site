@@ -68,18 +68,16 @@ cd /root/agenticscore-site && git add -A && git commit -m "..." && git push && v
 
 The page is honest about its own state, and it should stay that way:
 
-- The contract is deployed at `0x9ABB0c362B6F907b9Dadb8941E5C04B0705e7EF0` with minting open, so
-  the switch is on. There is still no mint button: minting happens through an agent, using
-  `skill.md` or the pasted prompt, and `VERIFY_ENDPOINT` is not set yet, so the agent stops.
+- The contract is deployed at `0x9ABB0c362B6F907b9Dadb8941E5C04B0705e7EF0` with minting open, and
+  the verification backend that issues vouchers is live, so an agent that follows `skill.md` can
+  mint end to end. There is still no mint button on the page: minting happens through an agent.
   The earlier free contract at `0xdb4aDa50DBa6445Fd56F1d3ea3309bb5519b40A8` is closed and unused.
-- Minting is shown as free, always with "gas only" next to it (about 0.000005 BNB: 85,000 to 105,000
-  gas at BSC's 0.05 gwei, measured on the deployed contract). That gas goes to the network's
-  validators, not to the project. Gas varies a
-  little with the network. If a fixed fee is ever charged by the contract, it is no longer
-  "gas only" and every mention has to change.
+- Minting costs 0.00008 BNB, set by the contract's `mintFee`, plus network gas of about 0.000005 BNB
+  (85,000 to 105,000 gas at BSC's 0.05 gwei, measured on the deployed contract). The fee goes to the
+  project; the gas goes to the network's validators. Every mention of the price has to match what
+  `mintFee()` reports, because anyone can read it.
 - `skill.md` has a Launch settings block (STATUS, CONTRACT_ADDRESS, VERIFY_ENDPOINT,
-  MINT_FUNCTION). It ships as NOT OPEN, with the deployed contract address already filled in.
-  At launch, set VERIFY_ENDPOINT and switch STATUS to OPEN.
+  MINT_FUNCTION). It is filled in and OPEN, and it spells out the two calls the backend exposes.
   The skill tells the agent to trust that block and nothing else.
 - The supply panel in the hero reads zero because nothing is minted and minting is not open.
   Point `window.AGENTICSCORE_SUPPLY` at an endpoint answering `{"minted": n, "max": 3000}` to
