@@ -114,7 +114,7 @@
     if (supplyState) {
       supplyState.textContent = open
         ? count > 0
-          ? "Read from the contract, refreshed every 30 seconds. The 3,000 cap is enforced on chain."
+          ? "Read from the contract, refreshed every 30 seconds."
           : "Minting is open. Nothing is minted yet. This counter reads the contract."
         : "Minting is not open, so nothing is minted.";
     }
