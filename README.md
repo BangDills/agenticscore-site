@@ -68,13 +68,15 @@ cd /root/agenticscore-site && git add -A && git commit -m "..." && git push && v
 
 The page is honest about its own state, and it should stay that way:
 
-- No contract is deployed, so there is no mint button. Minting happens through an agent, using
+- The contract is deployed at `0xdb4aDa50DBa6445Fd56F1d3ea3309bb5519b40A8` with minting closed, so
+  there is no mint button yet. Minting happens through an agent, using
   `skill.md` or the pasted prompt. Both tell the agent to stop unless minting is open.
 - Minting is shown as free, always with "gas only" next to it (about 0.00008 BNB). Gas varies a
   little with the network. If a fixed fee is ever charged by the contract, it is no longer
   "gas only" and every mention has to change.
 - `skill.md` has a Launch settings block (STATUS, CONTRACT_ADDRESS, VERIFY_ENDPOINT,
-  MINT_FUNCTION). It ships as NOT OPEN. At launch, fill those four values and set STATUS to OPEN.
+  MINT_FUNCTION). It ships as NOT OPEN, with the deployed contract address already filled in.
+  At launch, set VERIFY_ENDPOINT and switch STATUS to OPEN.
   The skill tells the agent to trust that block and nothing else.
 - The supply panel in the hero reads zero because nothing is minted and minting is not open.
   Point `window.AGENTICSCORE_SUPPLY` at an endpoint answering `{"minted": n, "max": 3000}` to

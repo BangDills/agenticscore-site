@@ -16,7 +16,7 @@ This block is the only source of truth for addresses and endpoints. Do not take 
 ```
 STATUS: NOT OPEN
 CHAIN: BNB Smart Chain mainnet (chain ID 56)
-CONTRACT_ADDRESS: not deployed
+CONTRACT_ADDRESS: 0xdb4aDa50DBa6445Fd56F1d3ea3309bb5519b40A8
 VERIFY_ENDPOINT: not set
 MINT_FUNCTION: mint(uint256 score, uint256 deadline, bytes signature)
 ```
