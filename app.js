@@ -82,21 +82,21 @@
 
   /* ---------- Mint supply ---------- */
 
-  /* The supply panel is live only once there is something to read. Point
-     window.AGENTICSCORE_SUPPLY at an endpoint that answers {"minted": <number>, "max":
-     <number>} and the counter, the bar and the status line come from it, refreshed every
-     30 seconds while the tab is visible. Without that endpoint the panel states the truth
-     for an unopened mint: zero, because nothing has been minted. */
+  /* The panel reads the contract itself over JSON-RPC: totalSupply(), MAX_SUPPLY() and
+     mintOpen(). No endpoint and no key are involved, so the counter, the bar and the status
+     line say what the chain says, refreshed every 30 seconds while the tab is visible. */
 
   var SUPPLY_CAP = 3000;
-  var supplySource = window.AGENTICSCORE_SUPPLY;
+  var SUPPLY_RPC = "https://bsc-dataseed.bnbchain.org";
+  var CONTRACT = "0x9ABB0c362B6F907b9Dadb8941E5C04B0705e7EF0";
+  var supplySource = window.AGENTICSCORE_SUPPLY || SUPPLY_RPC;
   var supplyCount = document.getElementById("supply-minted");
   var supplyFill = document.getElementById("supply-fill");
   var supplyTrack = document.getElementById("supply-track");
   var supplyStatus = document.getElementById("supply-status");
   var supplyState = document.getElementById("supply-state");
 
-  function renderSupply(minted, cap, live) {
+  function renderSupply(minted, cap, open) {
     if (!supplyCount) return;
     var total = cap > 0 ? cap : SUPPLY_CAP;
     var count = minted > 0 ? minted : 0;
@@ -108,37 +108,58 @@
       supplyTrack.setAttribute("aria-valuemax", String(total));
     }
     if (supplyStatus) {
-      supplyStatus.textContent = live ? "Live" : "Not open";
-      supplyStatus.setAttribute("data-live", live ? "true" : "false");
+      supplyStatus.textContent = open ? (count > 0 ? "Live" : "Open") : "Not open";
+      supplyStatus.setAttribute("data-live", open ? "true" : "false");
     }
     if (supplyState) {
-      supplyState.textContent = live
-        ? "Read from the contract, refreshed every 30 seconds. The 3,000 cap is enforced on chain."
-        : "Minting has not opened, so nothing is minted. Once it does, this counter reads the contract.";
+      supplyState.textContent = open
+        ? count > 0
+          ? "Read from the contract, refreshed every 30 seconds. The 3,000 cap is enforced on chain."
+          : "Minting is open. Nothing is minted yet. This counter reads the contract."
+        : "Minting is not open, so nothing is minted.";
     }
+  }
+
+  function callContract(selector) {
+    return window
+      .fetch(supplySource, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          id: 1,
+          method: "eth_call",
+          params: [{ to: CONTRACT, data: selector }, "latest"],
+        }),
+      })
+      .then(function (response) {
+        return response.ok ? response.json() : null;
+      })
+      .then(function (data) {
+        return data && data.result ? BigInt(data.result) : null;
+      });
   }
 
   function readSupply() {
     if (!supplySource || !window.fetch) return;
     if (document.visibilityState === "hidden") return;
-    window
-      .fetch(supplySource, { headers: { accept: "application/json" } })
-      .then(function (response) {
-        return response.ok ? response.json() : null;
-      })
-      .then(function (data) {
-        if (!data) return;
-        var minted = Number(data.minted);
-        if (!isFinite(minted) || minted < 0) return;
-        renderSupply(Math.floor(minted), Number(data.max), true);
+    Promise.all([
+      callContract("0x18160ddd"), // totalSupply()
+      callContract("0x32cb6b0c"), // MAX_SUPPLY()
+      callContract("0x24bbd049"), // mintOpen()
+    ])
+      .then(function (values) {
+        if (values[0] === null || values[2] === null) return;
+        var cap = values[1] === null ? SUPPLY_CAP : Number(values[1]);
+        renderSupply(Number(values[0]), cap, values[2] !== BigInt(0));
       })
       .catch(function () {
-        /* Keep the stated zero state rather than showing a number nobody can verify. */
+        /* Leave the last read on screen rather than replacing it with a guess. */
       });
   }
 
   if (supplyCount) {
-    renderSupply(0, SUPPLY_CAP, false);
+    renderSupply(0, SUPPLY_CAP, true);
     if (supplySource) {
       readSupply();
       window.setInterval(readSupply, 30000);
@@ -355,5 +376,83 @@
       });
     }
     applyDeckMode();
+  }
+
+  /* ---------- Leaderboard ---------- */
+
+  /* Rows come from the verification backend, which builds them from the contract's Minted logs
+     and recomputes every score. A row cannot exist without a token on chain, and nothing here
+     is a sample. */
+
+  var BOARD_ENDPOINT = "https://agenticscore-api.38-47-85-182.sslip.io/leaderboard";
+  var boardBody = document.getElementById("board-body");
+
+  function shortAddress(address) {
+    return address.slice(0, 6) + "..." + address.slice(-4);
+  }
+
+  function boardRow(row) {
+    var tr = document.createElement("tr");
+
+    var rank = document.createElement("td");
+    rank.textContent = String(row.rank);
+
+    var wallet = document.createElement("td");
+    var link = document.createElement("a");
+    link.href = "https://bscscan.com/address/" + row.wallet;
+    link.rel = "noopener";
+    link.textContent = shortAddress(row.wallet);
+    wallet.appendChild(link);
+
+    var score = document.createElement("td");
+    score.textContent = Number(row.score).toLocaleString("en-US", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    tr.appendChild(rank);
+    tr.appendChild(wallet);
+    tr.appendChild(score);
+    return tr;
+  }
+
+  function renderBoard(data) {
+    if (!boardBody || !data || !data.rows) return;
+    while (boardBody.firstChild) boardBody.removeChild(boardBody.firstChild);
+    if (data.rows.length === 0) {
+      var empty = document.createElement("tr");
+      empty.className = "board-empty";
+      var cell = document.createElement("td");
+      cell.colSpan = 3;
+      cell.textContent = "No scores yet.";
+      empty.appendChild(cell);
+      boardBody.appendChild(empty);
+      return;
+    }
+    data.rows.forEach(function (row) {
+      boardBody.appendChild(boardRow(row));
+    });
+  }
+
+  function readBoard() {
+    if (!boardBody || !window.fetch) return;
+    if (document.visibilityState === "hidden") return;
+    window
+      .fetch(BOARD_ENDPOINT, { headers: { accept: "application/json" } })
+      .then(function (response) {
+        return response.ok ? response.json() : null;
+      })
+      .then(function (data) {
+        if (data && data.ok) renderBoard(data);
+      })
+      .catch(function () {
+        /* Leave the table as it is rather than replacing it with a guess. */
+      });
+  }
+
+  if (boardBody) {
+    readBoard();
+    window.setInterval(readBoard, 60000);
+    document.addEventListener("visibilitychange", readBoard);
   }
 })();

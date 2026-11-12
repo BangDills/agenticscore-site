@@ -86,7 +86,7 @@
         <div class="supply-track" id="supply-track" role="progressbar" aria-label="NFTs minted out of 3,000" aria-valuemin="0" aria-valuemax="3000" aria-valuenow="0">
           <span class="supply-fill" id="supply-fill"></span>
         </div>
-        <p class="caption" id="supply-state">Minting is open and nothing is minted yet. This counter reads the contract.</p>
+        <p class="caption" id="supply-state">This counter reads the contract.</p>
       </figure>
     </div>
   </section>
@@ -227,8 +227,8 @@ Rules:
           <thead>
             <tr><th scope="col">Rank</th><th scope="col">Wallet</th><th scope="col">Score</th></tr>
           </thead>
-          <tbody>
-            <tr class="board-empty"><td colspan="3">No scores yet. The leaderboard fills in after minting opens.</td></tr>
+          <tbody id="board-body">
+            <tr class="board-empty"><td colspan="3">No scores yet.</td></tr>
           </tbody>
         </table>
         <p class="caption">Rows appear here only from real minted scores. Nothing on this table is a sample.</p>
