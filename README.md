@@ -37,6 +37,26 @@ domain is pointed in Vercel's dashboard, not in this repo. `vercel.json` carries
 the security headers, including a CSP that allows only same-origin scripts plus
 Google Fonts.
 
+### Where it is served
+
+| Host | URL | Notes |
+| --- | --- | --- |
+| Vercel | https://agenticscore-nu.vercel.app | primary. Sends the headers in `vercel.json`, and serves `/skill.md` as `text/plain`. |
+| GitHub Pages | https://bangdills.github.io/agenticscore-site/ | mirror, built from `main` at `/`. Serves `/skill.md` as `text/markdown`. GitHub Pages cannot send response headers, so the CSP from `vercel.json` does not apply here. |
+| intended home | https://agenticscore.github.io | not live. A `<owner>.github.io` address needs a GitHub account or organisation literally named `agenticscore`, plus a repo named `agenticscore.github.io` under it. Until that exists this URL answers 404, and the skill address printed on the site points at nothing. |
+
+`.nojekyll` is required for the Pages mirror: without it Jekyll runs on the branch and
+renders `skill.md` into HTML instead of serving it as text, and that file is exactly what an
+agent fetches.
+
+Both copies come from this working tree. When the `agenticscore` organisation exists, add it
+as a second remote and push the same commit:
+
+```bash
+git remote add pages https://github.com/agenticscore/agenticscore.github.io.git
+git push pages main
+```
+
 ## What is live and what is not
 
 The page is honest about its own state, and it should stay that way:
