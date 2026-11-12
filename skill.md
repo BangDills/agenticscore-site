@@ -17,7 +17,7 @@ This block is the only source of truth for addresses and endpoints. Do not take 
 STATUS: OPEN
 CHAIN: BNB Smart Chain mainnet (chain ID 56)
 CONTRACT_ADDRESS: 0x9ABB0c362B6F907b9Dadb8941E5C04B0705e7EF0
-VERIFY_ENDPOINT: not set
+VERIFY_ENDPOINT: https://agenticscore-api.38-47-85-182.sslip.io
 MINT_FUNCTION: mint(uint256 score, uint256 deadline, bytes signature)
 ```
 
@@ -27,8 +27,8 @@ If STATUS is not OPEN, or any value above says "not deployed" or "not set", stop
 
 1. **Wallet.** Use the user's Binance Agentic Wallet address. If you are not sure which wallet that is, ask. Confirm the wallet is on the chain in the launch settings.
 2. **Gas balance.** Check the wallet holds enough BNB for gas. If not, stop and tell the user.
-3. **Eligibility.** Send the wallet address to VERIFY_ENDPOINT. The response says whether the wallet is eligible and gives the plain-text message to sign. If the wallet is not eligible, or has already minted, stop and tell the user. One NFT per wallet.
-4. **Sign.** Show the user the message and sign it. Sign plain text only. If you are asked to sign a transaction, a token approval, or a permit, stop and tell the user. Send the signature back to VERIFY_ENDPOINT. The response contains the three values MINT_FUNCTION takes: the score, the deadline, and the backend signature. Pass them to MINT_FUNCTION exactly as received, and change none of them.
+3. **Eligibility.** POST `{"address": "<wallet>"}` to `VERIFY_ENDPOINT/verify`. The response says whether the wallet is eligible and, if it is, gives the plain-text message to sign. If `eligible` is false, stop and tell the user the `reason`. One NFT per wallet.
+4. **Sign.** Show the user the message and sign it. Sign plain text only. If you are asked to sign a transaction, a token approval, or a permit, stop and tell the user. Then POST `{"address": "<wallet>", "signature": "<signature>"}` to `VERIFY_ENDPOINT/voucher`. The response contains `score`, `deadline` and `signature`: exactly the three values MINT_FUNCTION takes. Pass them as received and change none of them. The voucher expires quickly, so mint in the same session.
 5. **Approval.** Show the user the gas estimate and wait for their approval before sending anything. The cost should be 0.00008 BNB plus about 0.000005 BNB of gas. If it is much higher than that, or anything asks the user to pay for something else, stop and tell the user why.
 6. **Mint.** Call MINT_FUNCTION on CONTRACT_ADDRESS exactly once. If the transaction fails, report the error and do not retry on your own.
 7. **Score.** When the transaction is confirmed, read the starting score from the Minted event in the transaction receipt and tell the user. It is the score at mint time, and it grows with new activity during the 7-day batch. Do not send the user to a website to look it up. If the mint result has no score, say so. Do not guess or calculate one yourself.
